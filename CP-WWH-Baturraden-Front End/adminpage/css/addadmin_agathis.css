@@ -1,0 +1,115 @@
+/*
+    File CSS untuk halaman pemilihan kamar Villa Agathis.
+    Struktur dan gaya sama dengan villa lainnya untuk konsistensi.
+*/
+.room-selection-main-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.room-selection-main-content .col-left {
+    flex: 1;
+    min-width: 300px;
+}
+.room-selection-main-content .col-right {
+    flex: 2;
+    min-width: 400px;
+}
+.room-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+}
+.room-features { 
+    color: #555; 
+}
+.room-features .feature-item { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 0.75rem; 
+}
+.room-features .feature-item i { 
+    margin-right: 0.75rem; 
+    color: #28a745;
+}
+.room-options-header, .room-option-item {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1.5fr; 
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+.room-options-header {
+    padding-top: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.room-option-item {
+    background-color: #fff;
+    border: 1px solid #eee; 
+    border-radius: 8px; 
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+.room-option-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-color: #ddd;
+}
+.room-options-header h6 { 
+    font-weight: bold; 
+    color: #555; 
+    margin: 0; 
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.room-option-details h6 { 
+    font-weight: bold; 
+    margin: 0 0 0.25rem 0;
+    font-size: 1.15em;
+}
+.room-option-details .sub-info { 
+    font-size: 0.9em; 
+    color: #777;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.room-option-capacity {
+    text-align: center;
+    color: #555;
+}
+.room-option-capacity i { 
+    font-size: 1.2rem; 
+    margin-bottom: 0.2rem; 
+    color: #28a745;
+    display: block;
+}
+.room-option-price-action {
+    text-align: right;
+}
+.room-option-price-action .current-price { 
+    font-weight: bold; 
+    font-size: 1.3rem; 
+    color: #ff5722;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.btn-select-room {
+    background-color: #28a745;
+    color: #fff; 
+    border: none;
+    padding: 8px 15px; 
+    border-radius: 5px; 
+    cursor: pointer;
+    font-size: 0.9em; 
+    font-weight: bold; 
+    transition: background-color 0.3s;
+}
+.btn-select-room:hover { 
+    background-color: #218838;
+}

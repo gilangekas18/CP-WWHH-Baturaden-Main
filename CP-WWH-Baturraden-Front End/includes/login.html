@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+     
+    <meta charset="UTF-8" />
+     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Login</title>
+     
+    <link rel="stylesheet" href="/css/login.css" />
+</head>
+
+<body>
+      <div class="register-container">
+            <h2>Login</h2>
+        <!-- Menghapus action & method, menambahkan id -->
+            <form id="loginForm">
+                  <div class="form-group">
+                <!-- Mengganti Username menjadi Email agar sesuai backend -->
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" required />
+
+            </div>
+                  <div class="form-group">
+                        <label for="password">Kata Sandi</label>
+                        <input type="password" name="password" id="password" required />
+                      </div>
+                  <button type="submit">Masuk</button>
+            <!-- Wadah untuk menampilkan pesan error/sukses -->
+            <div id="form-message" class="message-container"></div>
+               
+        </form>
+            <p class="signup-link">Belum punya akun? <a href="register.html">Daftar sekarang</a></p>
+          </div>
+
+    <!-- Memanggil script login sebagai module -->
+    <script type="module" src="/js/api/login.js"></script>
+</body>
+
+</html>

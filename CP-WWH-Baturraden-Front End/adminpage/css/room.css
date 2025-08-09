@@ -1,0 +1,250 @@
+/* Reusing general styles from index.css for body, container, overlay, sidebar, main-content */
+
+/* Specific styles for the Room page navbar elements */
+.navbar .page-title {
+    font-size: 2em; /* Adjusted font size */
+    font-weight: 700;
+    color: #333;
+    margin-right: auto; /* Pushes the right section to the end */
+    margin-left: 20px; /* Space from hamburger menu */
+}
+
+.navbar .navbar-right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .search-bar-navbar {
+    position: relative;
+    margin-right: 20px; /* Space between search and user info */
+}
+
+.navbar .search-bar-navbar input {
+    padding: 8px 15px 8px 35px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.9em;
+    outline: none;
+    width: 200px;
+    background-color: #f9f9f9; /* Slightly different background for search */
+}
+
+.navbar .search-bar-navbar i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.navbar .user-profile-info-navbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .user-avatar-circle-navbar {
+    width: 38px; /* Slightly larger avatar */
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .user-details-navbar {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px; /* Space before dropdown arrow */
+}
+
+.navbar .user-name-navbar {
+    font-weight: bold;
+    color: #333;
+    font-size: 0.95em;
+}
+
+.navbar .admin-role-navbar {
+    font-size: 0.8em;
+    color: #6c757d;
+}
+
+.navbar .icon-button-navbar {
+    font-size: 1.4em;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.navbar .icon-button-navbar:hover {
+    color: #007bff;
+}
+
+/* Room List Section */
+.room-list-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.room-card {
+    display: flex;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%; /* Ensure cards take full width */
+    max-width: 700px; /* Limit max width for better appearance */
+    margin: 0 auto; /* Center the cards */
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.room-image {
+    width: 200px; /* Fixed width for the image */
+    height: 180px; /* Fixed height for the image */
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.room-details {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.room-name {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.room-type-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.room-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 15px; /* Adjust gap for horizontal and vertical spacing */
+    margin-bottom: 15px;
+}
+
+.room-type-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.room-type-item i {
+    color: #28a744; /* Green checkmark */
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+
+.view-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    align-self: flex-end; /* Align button to the right/bottom */
+    transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+    background-color: #45a049;
+}
+
+/* Media Queries for Responsiveness in room.css */
+
+@media (max-width: 768px) {
+    .navbar .page-title {
+        font-size: 1.8em;
+        margin-left: 10px;
+    }
+    .navbar .search-bar-navbar {
+        display: none; /* Hide search bar in mobile for space */
+    }
+    .navbar .user-profile-info-navbar {
+        gap: 10px;
+    }
+    .navbar .user-details-navbar {
+        display: none; /* Hide user name and role in mobile */
+    }
+    .navbar .user-avatar-circle-navbar {
+        width: 35px;
+        height: 35px;
+    }
+    .navbar .dropdown-arrow {
+        display: none; /* Hide dropdown arrow as dropdown is hidden */
+    }
+    .user-dropdown-container {
+        display: flex; /* Keep the container for avatar, but hide internal elements */
+        align-items: center;
+        margin-left: 0; /* No margin as other elements are hidden */
+    }
+    .user-dropdown-menu.active {
+        right: 10px; /* Adjust position for mobile */
+        top: 60px; /* Adjust dropdown position */
+    }
+
+    .room-card {
+        flex-direction: column; /* Stack image and details vertically */
+        align-items: center;
+        max-width: 350px; /* Adjust max width for smaller screens */
+        margin: 0 auto; /* Center the cards */
+    }
+    .room-image {
+        width: 100%; /* Image takes full width of card */
+        height: 200px; /* Adjust height */
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        border-bottom-left-radius: 0;
+    }
+    .room-details {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+    }
+    .room-name {
+        font-size: 1.4em;
+    }
+    .room-type-label {
+        margin-bottom: 10px;
+    }
+    .room-types {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .view-button {
+        width: 80%; /* Make button wider */
+        align-self: center; /* Center the button */
+    }
+}
+
+@media (max-width: 480px) {
+    .room-image {
+        height: 150px; /* Further reduce image height on very small screens */
+    }
+    .room-name {
+        font-size: 1.3em;
+    }
+}

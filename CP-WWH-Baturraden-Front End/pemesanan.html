@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pemesanan Villa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link ke CSS Anda -->
+    <link rel="stylesheet" href="css/style.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/pesanan.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="container-fluid page-header position-relative overlay-bottom">
+        <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5"
+            style="min-height: 400px">
+            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Form Pemesanan</h1>
+            <div class="d-inline-flex mb-lg-5">
+                <p class="m-0 text-white"><a class="text-white" href="index.html">Home</a></p>
+                <p class="m-0 text-white px-2">/</p>
+                <p class="m-0 text-white">Pemesanan Villa</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container mb-5" style="max-width: 1200px;">
+            <div class="row">
+                <div class="col-lg-7 col-md-12 mb-4">
+                    <div class="card shadow border-0">
+                        <div class="card-body p-4">
+                            <!-- Tempat untuk menampilkan pesan error atau sukses -->
+                            <div id="alert-container"></div>
+                            
+                            <form id="formPemesanan">
+                                <!-- PERBAIKAN: Input tersembunyi yang dibutuhkan oleh JavaScript -->
+                                <input type="hidden" id="room_type_id" name="room_type_id" value="">
+                                <input type="hidden" id="total_price" name="total_price" value="">
+
+                                <div class="form-group">
+                                    <label>Villa & Jenis Kamar yang Dipilih</label>
+                                    <div id="selectedVillaRoomInfo" class="selected-info-display">Memuat informasi kamar...</div>
+                                </div>
+
+                                <h5 class="mb-3">Detail Kontak Pemesan</h5>
+                                <div class="form-group">
+                                    <label for="booker_name">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="booker_name" name="booker_name" required
+                                        placeholder="Nama sesuai data login">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="booker_email">Email</label>
+                                        <input type="email" class="form-control" id="booker_email" name="booker_email"
+                                            required placeholder="Email sesuai data login">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="booker_phone">Nomor Ponsel</label>
+                                        <input type="tel" class="form-control" id="booker_phone" name="booker_phone"
+                                            required placeholder="Contoh: 081234567890">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="guestType" id="iAmGuest"
+                                            value="false" checked>
+                                        <label class="form-check-label" for="iAmGuest">Saya tamu yang menginap</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="guestType"
+                                            id="bookingForAnother" value="true">
+                                        <label class="form-check-label" for="bookingForAnother">Saya memesan untuk orang lain</label>
+                                    </div>
+                                </div>
+
+                                <div id="actualGuestSection" style="display: none;">
+                                    <hr class="my-4">
+                                    <h5 class="mb-3">Detail Tamu yang Menginap</h5>
+                                    <div class="form-group">
+                                        <label for="guest_name">Nama Lengkap Tamu</label>
+                                        <input type="text" class="form-control" id="guest_name" name="guest_name"
+                                            placeholder="Contoh: Budi Santoso">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="guest_email">Email Tamu</label>
+                                            <input type="email" class="form-control" id="guest_email" name="guest_email"
+                                                placeholder="Contoh: budi@example.com">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="guest_phone">Nomor Ponsel Tamu</label>
+                                            <input type="tel" class="form-control" id="guest_phone" name="guest_phone"
+                                                placeholder="Contoh: 081123456789">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+
+                                <h5 class="mb-3">Detail Menginap</h5>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="check_in_date">Tanggal Check-In</label>
+                                        <input type="date" class="form-control" id="check_in_date" name="check_in_date"
+                                            required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="check_out_date">Tanggal Check-Out</label>
+                                        <input type="date" class="form-control" id="check_out_date"
+                                            name="check_out_date" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="num_rooms">Jumlah Kamar</label>
+                                        <input type="number" class="form-control" id="num_rooms" name="num_rooms"
+                                            min="1" value="1" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="num_guests">Jumlah Tamu</label>
+                                        <input type="number" class="form-control" id="num_guests" name="num_guests"
+                                            min="1" value="1" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="extraBed">Extra Bed (Opsional)</label>
+                                    <select class="form-control" id="extraBed" name="extra_beds">
+                                        <option value="0">Tidak Ada</option>
+                                        <option value="1">1 Extra Bed</option>
+                                        <option value="2">2 Extra Bed</option>
+                                    </select>
+                                    <small class="form-text text-muted">Pilih jumlah extra bed yang dibutuhkan.</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="notes">Catatan Tambahan (Opsional)</label>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3"
+                                        placeholder="Contoh: Tambahan selimut, datang malam."></textarea>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <h5 class="mb-3">Metode Pembayaran</h5>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="cash"
+                                        value="cash" checked>
+                                    <label class="form-check-label" for="cash">Cash (Bayar di tempat)</label>
+                                </div>
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="qris"
+                                        value="qris">
+                                    <label class="form-check-label" for="qris">QRIS (Transfer)</label>
+                                </div>
+
+                                <div id="qrisSection" style="display: none;">
+                                    <div class="text-center mb-3">
+                                        <img src="img/QRIS.jpg" alt="QRIS"
+                                            style="max-width: 260px; border-radius: 10px;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="proof_file">Upload Bukti Transfer</label>
+                                        <input type="file" class="form-control-file" id="proof_file" name="proof_file"
+                                            accept=".jpg,.jpeg,.png,.pdf">
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="submitButton" class="btn btn-primary btn-block mt-3">Kirim Pemesanan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12 mb-4">
+                    <div class="card shadow border-0 resort-detail-card">
+                        <div class="card-body p-4">
+                            <h4 class="resort-detail-header mb-3" id="roomNameDisplay">Detail Pesanan</h4>
+                            <div class="mb-4 text-center">
+                                <img src="img/FO EBONY.png" class="img-fluid rounded" alt="Room Image"
+                                    id="roomImageDisplay" style="max-height: 200px; width: auto;">
+                            </div>
+                            <div class="d-flex justify-content-between check-info-box mb-3">
+                                <div class="text-center">
+                                    <h6 class="text-primary">Check-in</h6>
+                                    <p class="mb-0" id="checkinDateDisplay">--</p>
+                                </div>
+                                <div class="d-flex align-items-center"><span class="mx-2" id="nightsCountDisplay">0 malam</span></div>
+                                <div class="text-center">
+                                    <h6 class="text-primary">Check-out</h6>
+                                    <p class="mb-0" id="checkoutDateDisplay">--</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="price-section">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span id="priceSummaryText">Harga Kamar (1 kamar x 0 malam)</span>
+                                    <span id="roomPriceSubtotal">Rp 0</span>
+                                </div>
+                                <div class="d-flex justify-content-between font-weight-bold">
+                                    <span>Total Harga</span>
+                                    <span class="final-price" id="finalPriceDisplay">Rp 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="container-fluid footer text-white mt-5 pt-5 px-0 position-relative overlay-top">
+        <!-- ... Isi footer Anda ... -->
+    </div>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Panggil script pemesanan sebagai module -->
+    <script src="/js/pesanan.js"></script>
+</body>
+
+</html>

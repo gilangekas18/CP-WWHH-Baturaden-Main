@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palawis Risorsis - User Admin Dashboard</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <h1>Palawis Risorsis</h1>
+            <p>Perhutanan Alam Wisata</p> 
+        </div>
+        <i class="fas fa-times close-sidebar" id="closeSidebarBtn"></i>
+        <nav class="main-nav">
+            <ul>
+                <li class="active"><a href="indexadmin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="layout/adminreservasi.html"><i class="fas fa-calendar-alt"></i> Reservation</a></li>
+                <li><a href="layout/room.html"><i class="fas fa-bed"></i> Room</a></li>
+                <li><a href="#"><i class="fas fa-dollar-sign"></i> Financial</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="container">
+        <main class="main-content">
+            <header class="navbar">
+                <i class="fas fa-bars menu-toggle" id="menuToggleBtn"></i>
+                <div class="villa-management">Villa Management Dashboard</div>
+                <div class="user-dropdown-container" id="userDropdownContainer">
+                    <div class="user-dropdown-trigger">
+                        <div class="user-avatar-circle">G</div>
+                        <div class="dropdown-arrow"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                            <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+                            <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
+                            <li><hr></li>
+                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-grid-area">
+                <div class="dashboard-header-line">
+                    <h2 class="dashboard-title">Dashboard</h2>
+                    <div class="search-and-user-section">
+                        <div class="search-bar-dashboard">
+                            <input type="text" placeholder="Search Apa Saja">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <span class="admin-role">Admin</span>
+                        <i class="fas fa-cog icon-button"></i>
+                        <i class="fas fa-bell icon-button"></i>
+                        <i class="fas fa-bars icon-button"></i>
+                    </div>
+                </div>
+
+                <section class="dashboard-cards">
+                    <div class="card">
+                        <h3>Booking Terbaru</h3>
+                        <p class="number">25</p>
+                        <p class="period">*Dalam Satu Bulan</p>
+                    </div>
+                    <div class="card">
+                        <h3>Check In</h3>
+                        <p class="number">20</p>
+                        <p class="period">*Dalam Satu Bulan</p>
+                    </div>
+                    <div class="card">
+                        <h3>Check Out</h3>
+                        <p class="number">15</p>
+                        <p class="period">*Dalam Satu Bulan</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Pendapatan</h3>
+                        <p class="number">13</p>
+                        <p class="period">*Dalam Satu Bulan</p>
+                    </div>
+                </section>
+
+                <section class="dashboard-sections">
+                    <div class="section-left">
+                        <div class="ketersediaan-kamar card">
+                            <h3>Ketersediaan Kamar</h3>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar filled" style="width: 70%;"></div>
+                                <div class="progress-bar vacant" style="width: 30%;"></div>
+                            </div>
+                            <div class="kamar-details">
+                                <div class="detail-item">
+                                    <p>Terisi</p>
+                                    <p class="count">8</p>
+                                </div>
+                                <div class="detail-item">
+                                    <p>Cadangan</p>
+                                    <p class="count">5</p>
+                                </div>
+                                <div class="detail-item">
+                                    <p>Tersedia</p>
+                                    <p class="count">30</p>
+                                </div>
+                                <div class="detail-item">
+                                    <p>Belum Terisi</p>
+                                    <p class="count">30</p>
+                                </div>
+                            </div>
+                            <p class="period">*Dalam Satu Bulan</p>
+                        </div>
+
+                        <div class="booking-platform card">
+                            <h3>Booking di Platform</h3>
+                            <div class="chart-and-legend">
+                                <canvas id="bookingChart"></canvas>
+                                <div class="chart-legend">
+                                    <ul>
+                                        <li><span class="color-box tikets"></span> Tiket.com <span class="percentage">20%</span></li>
+                                        <li><span class="color-box traveloka"></span> Traveloka <span class="percentage">40%</span></li>
+                                        <li><span class="color-box booking"></span> Booking.com <span class="percentage">30%</span></li>
+                                        <li><span class="color-box airbnb"></span> Airbnb <span class="percentage">10%</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="period">*Dalam Satu Bulan</p>
+                        </div>
+                    </div>
+
+                    <div class="section-right">
+                        <div class="overall-rating card">
+                            <h3>Overall Rating</h3>
+                            <p class="rating-score">4.8</p>
+                            <p class="rating-text">Impressive</p>
+                            <p class="review-count">from 232 Reviewers</p>
+                            <div class="rating-breakdown">
+                                <div class="rating-item">
+                                    <span>Fasilitas</span>
+                                    <div class="rating-bar"><div style="width: 90%;"></div></div>
+                                    <span>4.5</span>
+                                </div>
+                                <div class="rating-item">
+                                    <span>Kebersihan</span>
+                                    <div class="rating-bar"><div style="width: 95%;"></div></div>
+                                    <span>4.8</span>
+                                </div>
+                                <div class="rating-item">
+                                    <span>Layanan</span>
+                                    <div class="rating-bar"><div style="width: 92%;"></div></div>
+                                    <span>4.7</span>
+                                </div>
+                                <div class="rating-item">
+                                    <span>Kenyamanan</span>
+                                    <div class="rating-bar"><div style="width: 95%;"></div></div>
+                                    <span>4.8</span>
+                                </div>
+                                <div class="rating-item">
+                                    <span>Lokasi</span>
+                                    <div class="rating-bar"><div style="width: 92%;"></div></div>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

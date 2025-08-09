@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palawis Risorsis - Villa Accacia Details</title>
+    <link rel="stylesheet" href="../css/room_accacia.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS Tambahan untuk Modal Edit */
+        .edit-modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); z-index: 1000;
+        }
+        .edit-modal {
+            display: none; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); background-color: white;
+            padding: 25px 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001; width: 90%; max-width: 400px;
+        }
+        .edit-modal h4 { margin-top: 0; }
+        .edit-modal .form-group { margin-bottom: 15px; }
+        .edit-modal label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .edit-modal input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+        .edit-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .edit-modal-actions button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-save { background-color: #28a745; color: white; }
+        .btn-cancel { background-color: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <h1>Palawis Risorsis Logo</h1>
+                <p>Perhutanan Alam Wisata</p>
+                <i class="fas fa-times close-sidebar" id="closeSidebarBtn"></i>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../indexadmin.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                    <li><a href="adminreservasi.html"><i class="fas fa-calendar-alt"></i> <span>Reservation</span></a></li>
+                    <li class="active"><a href="room_agathis.html"><i class="fas fa-bed"></i> <span>Room</span></a></li>
+                    <li><a href="#"><i class="fas fa-dollar-sign"></i> <span>Financial</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="navbar">
+                <i class="fas fa-bars menu-toggle" id="menuToggleBtn"></i>
+                <div class="page-title">Villa Accacia</div>
+                <div class="navbar-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search Room">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="user-info">
+                        <img src="https://via.placeholder.com/35" alt="User Avatar" class="user-avatar-circle">
+                        <div class="user-details">
+                            <span class="user-name">Gilang Eka S</span>
+                            <span class="user-role">Admin</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-bell icon-button"></i>
+                    <i class="fas fa-cog icon-button"></i>
+                </div>
+            </header>
+
+            <div class="room-detail-container">
+                <div class="room-images">
+                    <img src="../img/accacia1.png" alt="Villa Accacia Main" class="main-image" id="detailRoomImage">
+                    <div class="thumbnail-images">
+                        <img src="/img/accacia1.png" alt="Villa Accacia Thumbnail 1" onclick="document.getElementById('detailRoomImage').src='../img/accacia1.png'">
+                        <img src="/img/accacia2.png" alt="Villa Accacia Thumbnail 2" onclick="document.getElementById('detailRoomImage').src='../img/accacia2.png'">
+                        <img src="/img/accacia3.png" alt="Villa Accacia Thumbnail 3" onclick="document.getElementById('detailRoomImage').src='../img/accacia3.png'">
+                    </div>
+                    <p class="image-note">*Harga dapat berubah sewaktu-waktu. Hubungi kontak untuk info terbaru.</p>
+                </div>
+                <div class="room-details">
+                    <div class="detail-header">
+                        <h3>Detail Kamar</h3>
+                        <button class="edit-btn" id="editPriceBtn">Edit</button>
+                    </div>
+                    <h2 class="room-name" id="detailRoomName">All In Villa Accacia</h2>
+                    <p class="room-price" id="detailRoomPrice">Memuat harga...</p>
+                    <p><i class="fas fa-check-circle"></i> 4 Kamar Tidur</p>
+                    <p><i class="fas fa-check-circle"></i> Kapasitas 8 orang</p>
+                    <div class="facilities">
+                        <h4>Fasilitas</h4>
+                        <div class="facility-grid" id="detailFacilitiesList">
+                            <!-- Fasilitas bisa diisi oleh JS jika perlu -->
+                        </div>
+                    </div>
+                    <p class="note">Catatan tambahan jika ada (misal: kebijakan pembatalan, dll.)</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- === MODAL EDIT HARGA (BARU) === -->
+    <div class="edit-modal-overlay" id="editModalOverlay"></div>
+    <div class="edit-modal" id="editPriceModal">
+        <h4>Edit Harga Kamar</h4>
+        <div id="modalAlert"></div>
+        <form id="editPriceForm">
+            <div class="form-group">
+                <label for="newPrice">Harga Permalam Baru (Rp)</label>
+                <input type="number" id="newPrice" placeholder="Contoh: 2500000" required>
+            </div>
+            <div class="edit-modal-actions">
+                <button type="button" class="btn-cancel" id="cancelEditBtn">Batal</button>
+                <button type="submit" class="btn-save">Simpan</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/room_accacia.js"></script>
+</body>
+</html>

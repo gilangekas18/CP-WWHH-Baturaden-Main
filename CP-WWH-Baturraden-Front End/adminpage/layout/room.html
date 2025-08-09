@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palawis Risorsis - Room Management</title>
+
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/room.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <h1>Palawis Risorsis Logo</h1>
+                <p>Perhutanan Alam Wisata</p>
+                <i class="fas fa-times close-sidebar" id="closeSidebarBtn"></i>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <a href="indexadmin.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="adminreservasi.html"><i class="fas fa-calendar-alt"></i> <span>Reservation</span></a>
+                    </li>
+                    <li class="active"> <a href="room.html"><i class="fas fa-bed"></i> <span>Room</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-dollar-sign"></i> <span>Financial</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="navbar">
+                <i class="fas fa-bars menu-toggle" id="menuToggleBtn"></i>
+                <div class="page-title">Room</div>
+
+                <div class="navbar-right-section">
+                    <div class="search-bar-navbar">
+                        <input type="text" placeholder="Search Room">
+                        <i class="fas fa-search"></i>
+                    </div>
+
+                    <div class="user-dropdown-container" id="userDropdownContainer">
+                        <div class="user-dropdown-trigger">
+                            <img src="http://googleusercontent.com/file_content/0" alt="User Avatar" class="user-avatar-circle-navbar">
+                            <div class="user-details-navbar">
+                                <span class="user-name-navbar">Giang Eka S</span>
+                                <span class="admin-role-navbar">Admin</span>
+                            </div>
+                            <div class="dropdown-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="user-dropdown-menu" id="userDropdownMenu">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                                <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+                                <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
+                                <li><hr></li> <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <i class="fas fa-bell icon-button-navbar"></i>
+                    <i class="fas fa-cog icon-button-navbar"></i>
+                </div>
+            </header>
+
+            <section class="room-list-section">
+                <div class="room-card" data-room-id="deluxe">
+                    <img src="../../img/ebony.png" alt="Ebony Room" class="room-image">
+                    <div class="room-details">
+                        <h3 class="room-name">Ebony</h3>
+                        <p class="room-type-label">Jenis Kamar :</p>
+                        <div class="room-types">
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> Standard</div>
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> Deluxe</div>
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> Superior</div>
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> VIP</div>
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> ALL IN VILLA</div>
+                        </div>
+                        <a href="room_ebony.html?roomid=deluxe" class="view-button">View</a>
+                    </div>
+                </div>
+
+                <div class="room-card" data-room-id="agathis">
+                    <img src="../../img/agathis.png" alt="Agathis Room" class="room-image">
+                    <div class="room-details">
+                        <h3 class="room-name">Agathis</h3>
+                        <p class="room-type-label">Jenis Kamar : -</p>
+                        <div class="room-types">
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> ALL IN VILLA</div>
+                        </div>
+                        <a href="room_agathis.html" class="view-button">View</a>
+                    </div>
+                </div>
+
+                <div class="room-card" data-room-id="Accacia">
+                    <img src="../../img/accacia.png" alt="Accacia Room" class="room-image">
+                    <div class="room-details">
+                        <h3 class="room-name">Accacia</h3>
+                        <p class="room-type-label">Jenis Kamar : -</p>
+                        <div class="room-types">
+                            <div class="room-type-item"><i class="fas fa-check-circle"></i> ALL IN VILLA</div>
+                        </div>
+                        <a href="room_accacia.html" class="view-button">View</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/room.js"></script>
+</body>
+</html>

@@ -1,0 +1,747 @@
+/* General Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #E6F3F7; /* Warna background lebih dekat ke gambar */
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden; /* Tambahkan ini untuk mencegah scroll horizontal yang tidak diinginkan */
+}
+
+.container {
+    display: flex; /* Mengatur main-content agar mengisi sisa lebar */
+    min-height: 100vh;
+    width: 100%; /* Pastikan container mengisi lebar penuh */
+    position: relative; /* Penting untuk z-index overlay */
+}
+
+/* Overlay untuk saat sidebar popup */
+.overlay {
+    display: none; /* Tersembunyi secara default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Warna gelap transparan */
+    z-index: 999; /* Di bawah sidebar popup, di atas konten utama */
+    opacity: 0; /* Tambahkan opacity untuk transisi fade */
+    transition: opacity 0.3s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1; /* Tampilkan overlay */
+}
+
+/* Sidebar Styling (INI YANG AKAN JADI POPUP) */
+.sidebar {
+    width: 280px;
+    background-color: #fff;
+    padding: 30px 20px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05); /* Bayangan default */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #eee; /* Garis tipis di kanan */
+
+    /* ----- PENGATURAN POPUP SIDEBAR (SECARA DEFAULT TERSEMBUNYI DARI PANDANGAN) ----- */
+    position: fixed; /* Membuatnya melayang di atas konten */
+    top: 0;
+    left: -280px; /* Sembunyikan di luar layar kiri, sesuai lebarnya */
+    height: 100%; /* Mengambil tinggi penuh viewport */
+    z-index: 1000; /* Pastikan di atas elemen lain, termasuk overlay */
+    transition: left 0.3s ease-in-out; /* Transisi untuk properti 'left' */
+    visibility: hidden; /* Sembunyikan secara kuat saat tidak aktif */
+    opacity: 0; /* Tambahkan transisi opacity */
+    transition: left 0.3s ease-in-out, visibility 0.3s, opacity 0.3s ease-in-out;
+}
+
+/* Class ini akan ditambahkan oleh JS untuk menampilkan sidebar */
+.sidebar.active {
+    left: 0; /* Geser ke posisi terlihat */
+    visibility: visible; /* Tampilkan */
+    opacity: 1; /* Transisi ke terlihat */
+}
+
+/* Tombol close di dalam sidebar (terlihat hanya saat sidebar popup) */
+.sidebar .close-sidebar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.8em;
+    color: #6c757d;
+    cursor: pointer;
+    opacity: 0; /* Sembunyikan secara default */
+    transition: opacity 0.3s;
+}
+
+/* Tampilkan tombol close saat sidebar aktif */
+.sidebar.active .close-sidebar {
+    opacity: 1;
+}
+
+
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.sidebar .logo h1 {
+    font-size: 1.5em;
+    color: #4CAF50;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+.sidebar .logo p {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+}
+.sidebar .main-nav {
+    width: 100%;
+}
+.sidebar .main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar .main-nav ul li {
+    margin-bottom: 15px;
+}
+.sidebar .main-nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-weight: 500;
+}
+.sidebar .main-nav ul li a:hover {
+    background-color: #e0f2f7;
+    color: #007bff;
+    transform: translateX(5px);
+}
+.sidebar .main-nav ul li.active a {
+    background-color: #D1ECF1;
+    color: #0056b3;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.sidebar .main-nav ul li a i {
+    margin-right: 15px;
+    font-size: 1.3em;
+    color: #4CAF50;
+}
+.sidebar .main-nav ul li.active a i {
+    color: #0056b3;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #E6F3F7;
+    width: 100%; /* Memastikan mengisi penuh */
+    box-sizing: border-box; /* Padding dihitung ke dalam lebar */
+}
+
+/* Navbar/Header Styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Menyebar elemen */
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    padding-right: 10px;
+}
+
+/* Tombol hamburger menu (akan selalu terlihat untuk memicu sidebar popup) */
+.navbar .menu-toggle {
+    font-size: 1.8em;
+    cursor: pointer;
+    color: #6c757d;
+    margin-right: 20px; /* Jarak dari branding-header */
+    display: block; /* Dipastikan terlihat di semua ukuran layar */
+}
+
+/* Kelompokkan elemen kiri navbar untuk penataan yang lebih baik - INI DIHAPUS DARI HTML */
+/* .navbar-left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 20px;
+    flex-shrink: 0;
+} */
+
+/* Tulisan "Gilangeka Saputra" dan "User Admin" dihapus dari HTML, jadi styling ini tidak berlaku */
+/* .navbar .branding-header {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #28a745;
+    white-space: nowrap;
+} */
+/* .navbar .page-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #333;
+    text-align: left;
+    margin-right: 20px;
+    white-space: nowrap;
+} */
+
+.navbar .villa-management {
+    font-size: 1.4em; /* Sedikit diperbesar */
+    color: #6c757d; /* Warna teks */
+    font-weight: bold; /* Dibuat tebal */
+    flex-grow: 1; /* Tetap mengambil sisa ruang */
+    text-align: center; /* Diposisikan di tengah */
+    white-space: nowrap; /* Mencegah teks pecah */
+    overflow: hidden; /* Handle teks yang terlalu panjang */
+    text-overflow: ellipsis; /* Tambahkan elipsis jika kepanjangan */
+}
+
+/* Styling untuk User Dropdown / Session Popup */
+.user-dropdown-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+.user-dropdown-container .user-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar-circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9em;
+    border: 1px solid #ddd;
+}
+.dropdown-arrow i {
+    font-size: 1.2em;
+    color: #6c757d;
+}
+
+.user-dropdown-menu {
+    display: none; /* SECARA DEFAULT TERSEMBUNYI */
+    position: absolute;
+    top: 100%; /* Di bawah trigger */
+    right: 0; /* Di sebelah kanan trigger */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 100; /* Pastikan di atas elemen lain di navbar */
+    min-width: 180px;
+    padding: 10px 0;
+    margin-top: 10px; /* Jarak dari trigger */
+}
+.user-dropdown-menu.active {
+    display: block; /* Ditampilkan saat kelas 'active' ditambahkan */
+}
+.user-dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.user-dropdown-menu ul li {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.user-dropdown-menu ul li:hover {
+    background-color: #f0f0f0;
+}
+.user-dropdown-menu ul li a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+.user-dropdown-menu ul li i {
+    font-size: 1em;
+    color: #666;
+}
+.user-dropdown-menu ul li hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 5px 0;
+}
+
+
+/* Dashboard Grid Area - Tetap sama */
+.dashboard-grid-area {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.dashboard-header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.dashboard-title {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0;
+    color: #333;
+}
+
+.search-and-user-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.search-bar-dashboard {
+    position: relative;
+}
+
+.search-bar-dashboard input {
+    padding: 8px 15px 8px 35px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.9em;
+    outline: none;
+    width: 200px;
+}
+
+.search-bar-dashboard i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.user-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+}
+
+.admin-role {
+    font-size: 0.85em;
+    color: #6c757d;
+}
+
+.user-profile-info .icon-button {
+    font-size: 1.2em;
+    color: #6c757d;
+    cursor: pointer;
+}
+
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-bottom: 10px;
+}
+
+.dashboard-cards .card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.dashboard-cards .card h3 {
+    margin-top: 0;
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.dashboard-cards .card .number {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #28a745;
+    margin: 10px 0;
+}
+
+.dashboard-cards .card .period {
+    font-size: 0.8em;
+    color: #999;
+}
+
+/* Dashboard Sections (Left and Right) */
+.dashboard-sections {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.section-left {
+    flex: 2;
+    min-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.section-right {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.ketersediaan-kamar h3,
+.booking-platform h3,
+.overall-rating h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.3em;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.ketersediaan-kamar .progress-bar-container {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ketersediaan-kamar .progress-bar {
+    height: 100%;
+    transition: width 0.5s ease-out;
+}
+
+.ketersediaan-kamar .progress-bar.filled {
+    background-color: #4CAF50;
+}
+
+.ketersediaan-kamar .progress-bar.vacant {
+    background-color: #90CAF9;
+}
+
+.kamar-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.kamar-details .detail-item {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.kamar-details .detail-item p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.kamar-details .detail-item .count {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+}
+
+/* Booking Platform Chart and Legend */
+.booking-platform .chart-and-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.booking-platform canvas {
+    max-width: 200px;
+    max-height: 200px;
+    margin-right: 30px;
+}
+.chart-legend {
+    width: unset;
+    padding: 0;
+}
+.chart-legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+.chart-legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    color: #555;
+    flex: unset;
+    max-width: unset;
+}
+.chart-legend .color-box {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.chart-legend .color-box.tikets { background-color: #4CAF50; }
+.chart-legend .color-box.traveloka { background-color: #2196F3; }
+.chart-legend .color-box.booking { background-color: #FFC107; }
+.chart-legend .color-box.airbnb { background-color: #E91E63; }
+.chart-legend .percentage {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Overall Rating */
+.overall-rating .rating-score {
+    font-size: 3em;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.overall-rating .rating-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.overall-rating .review-count {
+    font-size: 0.9em;
+    color: #999;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.rating-breakdown .rating-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.rating-breakdown .rating-item span:first-child {
+    width: 80px;
+    font-size: 0.9em;
+    color: #555;
+    white-space: nowrap;
+}
+.rating-breakdown .rating-bar {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 10px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+.rating-breakdown .rating-bar div {
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 4px;
+    transition: width 0.5s ease-out;
+}
+.rating-breakdown .rating-item span:last-child {
+    font-weight: bold;
+    color: #333;
+    font-size: 0.9em;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Desktop / Layar Besar (>= 769px) */
+@media (min-width: 769px) {
+    /* Sidebar tersembunyi secara default di desktop, hanya muncul sebagai popup */
+    .sidebar {
+        left: -280px; /* Pastikan tersembunyi di luar layar */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2); /* Bayangan untuk popup */
+        overflow: hidden; /* Penting! Potong konten yang melimpah */
+    }
+    .sidebar.active { /* Saat aktif, geser ke posisi 0 */
+        left: 0;
+    }
+
+    .sidebar .close-sidebar {
+        display: block; /* Tombol close selalu terlihat saat sidebar popup, termasuk di desktop */
+    }
+
+    .main-content {
+        padding-left: 30px; /* Padding normal, tidak terpengaruh sidebar */
+    }
+    .navbar .menu-toggle {
+        display: block; /* Hamburger menu selalu terlihat di desktop */
+    }
+    .overlay {
+        /* Overlay hanya aktif jika sidebar aktif, tidak di-force hidden di desktop */
+    }
+    .dashboard-header-line {
+        margin-top: 20px;
+    }
+    .navbar {
+        justify-content: space-between;
+    }
+    /* Bagian yang dihapus dari HTML, jadi styling ini tidak diperlukan lagi */
+    /* .navbar .branding-header {
+        order: unset;
+        margin-right: unset;
+    } */
+    /* .navbar .page-title {
+        text-align: center;
+    } */
+    .user-dropdown-container {
+        display: flex; /* User dropdown selalu terlihat di desktop */
+    }
+}
+
+
+/* Tablet / Mobile (Layar <= 768px) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 280px;
+        left: -280px;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+        overflow: hidden; /* Pastikan juga overflow hidden di mobile */
+    }
+    .sidebar.active {
+        left: 0;
+    }
+    .sidebar .close-sidebar {
+        display: block;
+    }
+    .main-content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .navbar .menu-toggle {
+        display: block;
+        order: -1;
+        margin-right: auto;
+    }
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+    .navbar .branding-header {
+        display: none;
+    }
+    .navbar .page-title {
+        font-size: 1.8em;
+        margin-bottom: 0;
+        text-align: left;
+        flex-grow: unset;
+        order: 1;
+    }
+    .navbar .villa-management {
+        display: none; /* Sembunyikan Villa Management Dashboard di mobile jika tidak cukup ruang */
+    }
+    .user-dropdown-container {
+        display: none; /* User dropdown disembunyikan di mobile */
+    }
+
+    .dashboard-header-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .dashboard-title {
+        font-size: 1.8em;
+    }
+    .search-and-user-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        width: 100%;
+    }
+    .search-bar-dashboard input {
+        width: 100%;
+    }
+    .user-profile-info {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 15px;
+    }
+    .card {
+        padding: 15px;
+    }
+    .dashboard-cards .card .number {
+        font-size: 2em;
+    }
+    .kamar-details {
+        grid-template-columns: 1fr;
+    }
+    .overall-rating .rating-score {
+        font-size: 2.5em;
+    }
+
+    .booking-platform .chart-and-legend {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .booking-platform canvas {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .chart-legend ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .chart-legend li {
+        max-width: 100%;
+    }
+}

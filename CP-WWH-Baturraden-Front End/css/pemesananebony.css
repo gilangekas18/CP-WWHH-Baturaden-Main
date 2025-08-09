@@ -1,0 +1,308 @@
+/* General Body and Header adjustments for detail page */
+        body {
+            background-color: #f0f2f5;
+        }
+        /* Page Header menyesuaikan dengan layout template utama */
+        .page-header {
+            min-height: 400px; /* Kembali ke tinggi default template */
+            margin-bottom: 2rem; /* Sesuaikan margin bawah */
+            /* BARIS INI DIHAPUS UNTUK MENGGUNAKAN BACKGROUND DARI style.min.css */
+            /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x400/007bff/FFFFFF?text=Villa+Ebony+Header'); */
+            /* background-position: center; */
+            /* background-size: cover; */
+        }
+        .page-header h1 {
+            font-size: 3.5rem; /* Kembali ke ukuran font default template */
+        }
+        /* Main content tidak lagi perlu margin-top negatif jika Page Header sudah normal */
+        .main-content {
+            /* margin-top: -80px; */ /* Dihapus atau disesuaikan */
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Room Detail Card Container */
+        .room-detail-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .room-detail-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .room-main-content {
+            padding: 1.5rem;
+        }
+
+        /* Image Carousel (simulated) */
+        .room-image-carousel {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+            height: 250px; /* Tinggi gambar */
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .room-image-carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 5;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            background-color: #fff;
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Room Features */
+        .room-features .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .room-features .feature-item i {
+            margin-right: 0.5rem;
+            color: #007bff;
+        }
+        .room-features a {
+            color: #007bff;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .room-features a:hover {
+            text-decoration: underline;
+        }
+
+        /* Room Options List/Table */
+        .room-options-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.8rem;
+        }
+        .room-options-header h6 {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 0;
+        }
+        .room-options-header .col-header-1 { flex-basis: 45%; text-align: left; }
+        .room-options-header .col-header-2 { flex-basis: 10%; text-align: center; }
+        .room-options-header .col-header-3 { flex-basis: 45%; text-align: right; }
+
+
+        .room-option-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 1rem;
+        }
+        .room-option-item:last-child {
+            margin-bottom: 0;
+        }
+        .room-option-details {
+            flex: 2;
+        }
+        .room-option-details h6 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            color: #333;
+        }
+        .room-option-details .sub-info {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+        .room-option-details .sub-info i {
+            margin-right: 0.3rem;
+            color: #888;
+        }
+        .room-option-details .benefits {
+            font-size: 0.85rem;
+            color: #555;
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        .room-option-details .benefits li {
+            margin-bottom: 0.2rem;
+        }
+        .room-option-details .benefits i {
+            margin-right: 0.3rem;
+            color: #28a745;
+        }
+        .room-option-details .policy {
+            font-size: 0.8rem;
+            color: #dc3545;
+            margin-top: 0.5rem;
+        }
+        .room-option-details .policy i {
+            margin-right: 0.3rem;
+            color: #dc3545;
+        }
+
+        .room-option-capacity {
+            flex: 0.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #555;
+            font-size: 0.95rem;
+            padding-right: 0.5rem;
+        }
+        .room-option-capacity i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            color: #007bff;
+        }
+
+        .room-option-price-action {
+            flex: 1;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            padding-left: 0.5rem;
+            border-left: 1px dashed #eee;
+        }
+        .room-option-price-action .original-price {
+            font-size: 0.85rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 0.1rem;
+        }
+        .room-option-price-action .current-price {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #ff5722;
+            margin-bottom: 0.5rem;
+        }
+        .room-option-price-action .tax-info {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+        .room-option-price-action .available-rooms {
+            font-size: 0.85rem;
+            color: #28a745;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+        .room-option-price-action .btn-select {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .room-option-price-action .btn-select:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Overrides for Footer and Navbar specific to template */
+        /* Pastikan style.min.css utama sudah mengatur ini, ini hanya override jika diperlukan */
+        .footer .btn-outline-light {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 0; /* Changed to square */
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        .footer .btn-outline-light:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+        .footer h4 {
+            letter-spacing: 3px;
+        }
+        .footer .input-group .form-control {
+            padding: 25px;
+            border-radius: 8px !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .footer .input-group .form-control::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        .footer .input-group-append .btn-primary {
+            border-radius: 0 8px 8px 0;
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        /* CSS untuk Back to Top - Disesuaikan agar kotak, ukuran & simetri */
+        .back-to-top {
+            position: fixed;
+            display: none; /* Akan diubah menjadi block oleh jQuery saat discroll */
+            right: 30px;
+            bottom: 30px;
+            z-index: 99;
+            border-radius: 0; /* Bentuk kotak */
+            width: 46px; /* Ukuran sesuai btn-lg-square */
+            height: 46px; /* Ukuran sesuai btn-lg-square */
+            /* Menggunakan Flexbox untuk centering ikon */
+            display: flex;
+            align-items: center; /* Pusat vertikal */
+            justify-content: center; /* Pusat horizontal */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease-in-out;
+            background-color: #D29F62; /* Warna coklat keemasan */
+            color: #343a40; /* Warna gelap untuk ikon */
+        }
+        .back-to-top:hover {
+            background-color: #BF8C52; /* Warna hover coklat keemasan */
+            text-decoration: none;
+        }

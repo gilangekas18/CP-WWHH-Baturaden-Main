@@ -1,0 +1,481 @@
+/* Impor gaya dasar/umum dari style.css */
+@import url('/adminpage/css/index.css');
+
+/* --- Hanya tambahkan styling khusus Reservation di sini --- */
+
+/* Penyesuaian untuk header di halaman reservasi (menggantikan .navbar-page-title) */
+.navbar .reservation-header-right {
+    display: flex; /* Pastikan terlihat */
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.reservation-header-right .search-bar-header {
+    position: relative;
+}
+
+.reservation-header-right .search-bar-header input {
+    padding: 8px 15px 8px 35px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.9em;
+    outline: none;
+    width: 180px;
+}
+
+.reservation-header-right .search-bar-header i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.reservation-header-right .user-profile-info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.reservation-header-right .profile-pic-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+}
+.reservation-header-right span {
+    font-weight: 600;
+    margin-right: 8px;
+    color: #333;
+}
+.reservation-header-right .admin-role {
+    font-size: 0.85em;
+    color: #6c757d;
+}
+.reservation-header-right .icon-button {
+    font-size: 1.2em;
+    color: #6c757d;
+    cursor: pointer;
+}
+
+
+/* Reservation Content Area */
+.reservation-content-area {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.reservation-list-section, .booking-history-section {
+    padding: 25px;
+}
+
+.section-header-reservation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.section-header-reservation h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #333;
+}
+
+.reservation-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.reservation-actions .action-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #555;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+.reservation-actions .action-item i {
+    color: #007bff;
+}
+
+.reservation-actions .date-filter input {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9em;
+    outline: none;
+    text-align: center;
+    width: 150px;
+}
+.reservation-actions .date-filter {
+    position: relative;
+}
+.reservation-actions .date-filter i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
+.add-booking-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+.add-booking-btn:hover {
+    background-color: #218838;
+}
+
+/* Table Styling */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+table thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.status-badge.confirm {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Action Buttons in Table */
+.action-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+    color: #6c757d;
+}
+.action-btn.icon-only {
+    padding: 6px 8px;
+}
+.action-btn:hover {
+    background-color: #e9ecef;
+    border-color: #bbb;
+}
+.action-btn.cancel {
+    color: #dc3545;
+}
+.action-btn.cancel:hover {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+}
+
+
+/* Booking History Thumbnail */
+.booking-history-section h3 {
+    margin-top: 0;
+    font-size: 1.3em;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.room-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+/* --- STYLING UNTUK POPUP SELECT VILLA --- */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 1005; 
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.modal-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.modal {
+    display: none; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    z-index: 1010; 
+    max-width: 900px;
+    width: 90%; 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s;
+    box-sizing: border-box; 
+}
+
+.modal.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+}
+
+.modal .close-button {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal .close-button:hover {
+    color: #777;
+}
+
+.villa-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    justify-content: center;
+}
+
+
+#selectVillaModal {
+    max-width: 1100px;
+}
+
+.villa-card {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.villa-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.villa-card img {
+    max-width: 100%;
+    height: 120px; 
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.villa-card h4 {
+    margin: 10px 0 5px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.villa-card p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.villa-card .select-villa-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+.villa-card .select-villa-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Media Queries Reservation Page (Override general styles jika perlu) */
+@media (min-width: 769px) {
+    /* Pastikan header kanan terlihat di desktop */
+    .navbar .reservation-header-right {
+        display: flex;
+    }
+}
+@media (max-width: 768px) {
+    /* Sembunyikan bagian kanan header di mobile untuk menghemat ruang */
+    .navbar .reservation-header-right {
+        display: none;
+    }
+    /* Sesuaikan judul navbar jika ada navbar-page-title juga */
+    .navbar .navbar-page-title {
+        text-align: left; /* Sesuaikan jika perlu */
+        font-size: 1.8em; /* Sesuaikan jika perlu */
+    }
+    /* Responsif tabel untuk mobile */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    tr { border: 1px solid #ccc; margin-bottom: 10px; border-radius: 8px; overflow: hidden; }
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right !important;
+    }
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        content: attr(data-label);
+        color: #555;
+    }
+    .action-btn {
+        width: auto;
+        margin: 5px;
+    }
+    .action-btn.icon-only {
+        padding: 8px 10px;
+    }
+
+    /* Modal responsif di mobile */
+    .modal {
+        padding: 20px;
+        width: 95%;
+    }
+    .modal-content h2 {
+        font-size: 1.5em;
+    }
+    .modal .close-button {
+        font-size: 2em;
+    }
+    .villa-options {
+        grid-template-columns: 1fr; /* Satu kolom di mobile */
+    }
+}
+
+
+/* ================================== */
+/* === FIX UNTUK POSISI MODAL === */
+/* ================================== */
+
+.modal {
+    /* Menentukan posisi modal di tengah layar */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Memberi tampilan dasar agar terlihat jelas */
+    background-color: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 500px; /* Batas lebar maksimum */
+}
+
+.modal-overlay {
+    /* Memastikan overlay menutupi seluruh layar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.status-badge.confirmed {
+    background-color: #d4edda; 
+    color: #22cb49; 
+}
+
+
+.status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #920412; 
+}

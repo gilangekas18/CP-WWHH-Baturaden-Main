@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Pilih Opsi Villa Agathis</title>
+
+    <link rel="stylesheet" href="../css/adminreservasi.css">
+    <link rel="stylesheet" href="../css/addadmin_agathis.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* General Navbar Styles */
+        .navbar { justify-content: space-between; }
+        .navbar-left { display: flex; align-items: center; gap: 15px; flex: 1; }
+        .navbar-brand-text { font-size: 1.2em; font-weight: bold; color: #333; white-space: nowrap; }
+        .navbar-page-title { flex: 2; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .navbar-right { flex: 1; }
+
+        /* Facility List Styles */
+        .room-features p { margin-bottom: 15px; }
+        .facility-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 15px; list-style: none; padding: 0; margin: 0; }
+        .facility-list li { display: flex; align-items: center; font-size: 0.9em; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .facility-list li i { margin-right: 8px; color: #28a745; width: 16px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="modal-overlay" id="addBookingModalOverlay"></div>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <h1>Palawis Risorsis Logo</h1>
+                <p>Perhutanan Alam Wisata</p>
+                <i class="fas fa-times close-sidebar" id="closeSidebarBtn"></i>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/adminpage/indexadmin.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                    <li class="active"><a href="adminreservasi.html"><i class="fas fa-calendar-alt"></i> <span>Reservation</span></a></li>
+                    <li><a href="room.html"><i class="fas fa-bed"></i> <span>Room</span></a></li>
+                    <li><a href="financial.html"><i class="fas fa-dollar-sign"></i> <span>Financial</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle" id="menuToggleBtn"></i>
+                    <span class="navbar-brand-text">Villa Agathis</span>
+                </div>
+                <div class="navbar-page-title">Pilih Opsi: Villa Agathis</div>
+                <div class="navbar-right"></div>
+            </header>
+
+            <div class="reservation-content-area">
+                <div class="card">
+                    <div class="room-selection-main-content">
+                        <div class="col-left">
+                            <img src="../../img/agathis1.png" alt="Villa Agathis" class="room-image">
+                            <div class="room-features">
+                                <p>Menginap di <strong>Agathis Villa Baturraden</strong> adalah pilihan cerdas untuk Anda yang ingin menikmati suasana alam yang asri dan fasilitas lengkap.</p>
+                                <ul class="facility-list">
+                                    <li><i class="fas fa-utensils"></i>Free Breakfast</li>
+                                    <li><i class="fas fa-ticket-alt"></i>Free Tiket WWH</li>
+                                    <li><i class="fas fa-wifi"></i>WiFi</li>
+                                    <li><i class="fas fa-coffee"></i>Pantry</li>
+                                    <li><i class="fas fa-hot-tub"></i>Hot Shower</li>
+                                    <li><i class="fas fa-bed"></i>Double / Twin Bed</li>
+                                    <li><i class="fas fa-bath"></i>Bath Amenities</li>
+                                    <li><i class="fas fa-mug-hot"></i>Teko Pemanas Air</li>
+                                    <li><i class="fas fa-tv"></i>LED TV</li>
+                                    <li><i class="fas fa-tint"></i>Air Mineral</li>
+                                    <li><i class="fas fa-concierge-bell"></i>Resepsionis 24 Jam</li>
+                                    <li><i class="fas fa-shield-alt"></i>Keamanan 24 Jam</li>
+                                    <li><i class="fas fa-parking"></i>Parkiran Luas</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-right">
+                            <div class="room-options-header">
+                                <h6>Tipe Sewa</h6>
+                                <h6 class="text-center">Kapasitas</h6>
+                                <h6 class="text-right">Harga/Malam</h6>
+                            </div>
+
+                            <!-- PERUBAHAN UTAMA: Konten di bawah ini dikosongkan. -->
+                            <!-- JavaScript akan mengisi daftar kamar asli di sini. -->
+                            <div id="roomOptionsList">
+                                <p style="text-align: center; padding: 20px;">Memuat data kamar...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PERUBAHAN SCRIPT: Pastikan hanya menautkan ke JS yang benar untuk halaman ini -->
+    <script src="../js/addadmin_agathis.js"></script>
+</body>
+</html>

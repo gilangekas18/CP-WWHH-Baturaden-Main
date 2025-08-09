@@ -1,0 +1,102 @@
+#accacia-carousel {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#accacia-carousel .carousel-inner {
+    background: #222;
+    border-radius: 16px;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+}
+
+.accacia-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: 480px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: contain;
+    background: #222;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s;
+}
+
+#accacia-carousel .carousel-control-prev,
+#accacia-carousel .carousel-control-next {
+    opacity: 0.85;
+    transition: opacity 0.2s;
+    z-index: 2;
+}
+
+#accacia-carousel .carousel-control-prev:hover,
+#accacia-carousel .carousel-control-next:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#accacia-carousel .carousel-indicators {
+    bottom: -32px;
+}
+
+#accacia-carousel .carousel-indicators li {
+    background-color: #007bff;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 4px;
+    border: none;
+    transition: background 0.2s, border 0.2s;
+}
+
+#accacia-carousel .carousel-indicators .active {
+    background-color: #fff;
+    border: 2px solid #007bff;
+}
+
+@media (max-width: 1100px) {
+    #accacia-carousel {
+        max-width: 100%;
+    }
+
+    .accacia-img {
+        max-height: 320px;
+    }
+
+    #accacia-carousel .carousel-inner {
+        min-height: 160px;
+    }
+}
+
+@media (max-width: 900px) {
+    .accacia-img {
+        max-height: 200px;
+    }
+
+    #accacia-carousel .carousel-inner {
+        min-height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .accacia-img {
+        max-height: 120px;
+    }
+
+    #accacia-carousel .carousel-control-prev,
+    #accacia-carousel .carousel-control-next {
+        width: 36px;
+        height: 36px;
+        left: 6px !important;
+        right: 6px !important;
+    }
+
+    #accacia-carousel .carousel-inner {
+        min-height: 60px;
+    }
+}

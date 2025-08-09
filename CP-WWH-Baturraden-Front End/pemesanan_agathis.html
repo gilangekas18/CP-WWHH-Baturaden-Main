@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Villa Agathis - Pilihan Kamar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="img/favicon.ico" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <link href="css/style.min.css" rel="stylesheet">
+    
+    <style>
+        /* General Body and Header adjustments for detail page */
+        body {
+            background-color: #f0f2f5;
+        }
+        /* Page Header menyesuaikan dengan layout template utama */
+        .page-header {
+            min-height: 400px; /* Kembali ke tinggi default template */
+            margin-bottom: 2rem; /* Sesuaikan margin bawah */
+            /* Background akan diatur oleh style.min.css atau bisa di-override di sini jika perlu gambar spesifik Agathis */
+            /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('path/to/your/agathis_header_image.jpg'); */
+            /* background-position: center; */
+            /* background-size: cover; */
+        }
+        .page-header h1 {
+            font-size: 3.5rem; /* Kembali ke ukuran font default template */
+        }
+        /* Main content tidak lagi perlu margin-top negatif jika Page Header sudah normal */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Room Detail Card Container */
+        .room-detail-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .room-detail-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .room-main-content {
+            padding: 1.5rem;
+        }
+
+        /* Image Carousel (simulated) */
+        .room-image-carousel {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+            height: 250px; /* Tinggi gambar */
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .room-image-carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 5;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            background-color: #fff;
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Room Features */
+        .room-features .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .room-features .feature-item i {
+            margin-right: 0.5rem;
+            color: #007bff;
+        }
+        .room-features a {
+            color: #007bff;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .room-features a:hover {
+            text-decoration: underline;
+        }
+
+        /* Room Options List/Table */
+        .room-options-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.8rem;
+        }
+        .room-options-header h6 {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 0;
+        }
+        .room-options-header .col-header-1 { flex-basis: 45%; text-align: left; }
+        .room-options-header .col-header-2 { flex-basis: 10%; text-align: center; }
+        .room-options-header .col-header-3 { flex-basis: 45%; text-align: right; }
+
+
+        .room-option-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 1rem;
+        }
+        .room-option-item:last-child {
+            margin-bottom: 0;
+        }
+        .room-option-details {
+            flex: 2;
+        }
+        .room-option-details h6 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            color: #333;
+        }
+        .room-option-details .sub-info {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+        .room-option-details .sub-info i {
+            margin-right: 0.3rem;
+            color: #888;
+        }
+        .room-option-details .benefits {
+            font-size: 0.85rem;
+            color: #555;
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        .room-option-details .benefits li {
+            margin-bottom: 0.2rem;
+        }
+        .room-option-details .benefits i {
+            margin-right: 0.3rem;
+            color: #28a745;
+        }
+        .room-option-details .policy {
+            font-size: 0.8rem;
+            color: #dc3545;
+            margin-top: 0.5rem;
+        }
+        .room-option-details .policy i {
+            margin-right: 0.3rem;
+            color: #dc3545;
+        }
+
+        .room-option-capacity {
+            flex: 0.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #555;
+            font-size: 0.95rem;
+            padding-right: 0.5rem;
+        }
+        .room-option-capacity i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            color: #007bff;
+        }
+
+        .room-option-price-action {
+            flex: 1;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            padding-left: 0.5rem;
+            border-left: 1px dashed #eee;
+        }
+        .room-option-price-action .original-price {
+            font-size: 0.85rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 0.1rem;
+        }
+        .room-option-price-action .current-price {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #ff5722;
+            margin-bottom: 0.5rem;
+        }
+        .room-option-price-action .tax-info {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+        .room-option-price-action .available-rooms {
+            font-size: 0.85rem;
+            color: #28a745;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+        .room-option-price-action .btn-select {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .room-option-price-action .btn-select:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Overrides for Footer and Navbar specific to template */
+        /* Pastikan style.min.css utama sudah mengatur ini, ini hanya override jika diperlukan */
+        .footer .btn-outline-light {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 0; /* Changed to square */
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        .footer .btn-outline-light:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+        .footer h4 {
+            letter-spacing: 3px;
+        }
+        .footer .input-group .form-control {
+            padding: 25px;
+            border-radius: 8px !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .footer .input-group .form-control::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        .footer .input-group-append .btn-primary {
+            border-radius: 0 8px 8px 0;
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        /* CSS untuk Back to Top - Disesuaikan agar kotak, ukuran & simetri */
+        .back-to-top {
+            position: fixed;
+            display: none; /* Akan diubah menjadi block oleh jQuery saat discroll */
+            right: 30px;
+            bottom: 30px;
+            z-index: 99;
+            border-radius: 0; /* Bentuk kotak */
+            width: 46px; /* Ukuran sesuai btn-lg-square */
+            height: 46px; /* Ukuran sesuai btn-lg-square */
+            /* Menggunakan Flexbox untuk centering ikon */
+            display: flex;
+            align-items: center; /* Pusat vertikal */
+            justify-content: center; /* Pusat horizontal */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease-in-out;
+            background-color: #D29F62; /* Warna coklat keemasan */
+            color: #343a40; /* Warna gelap untuk ikon */
+        }
+        .back-to-top:hover {
+            background-color: #BF8C52; /* Warna hover coklat keemasan */
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
+        <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5"
+            style="min-height: 400px">
+            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Villa Agathis</h1>
+            <div class="d-inline-flex mb-lg-5">
+                <p class="m-0 text-white"><a class="text-white" href="index.html">Home</a></p>
+                <p class="m-0 text-white px-2">/</p>
+                <p class="m-0 text-white">Villa Agathis</p>
+            </div>
+        </div>
+    </div>
+    <div class="container main-content" style="max-width: 900px;">
+        <div class="room-detail-card">
+            <div class="room-detail-header">
+                Pilihan Kamar Villa Agathis
+            </div>
+            <div class="room-main-content row">
+                <div class="col-md-5">
+                    <div class="room-image-carousel mb-4">
+                        <img src="img/agathis_view_1.png" alt="Villa Agathis General View">
+                        <div class="carousel-dots">
+                            <span class="carousel-dot active"></span>
+                            <span class="carousel-dot"></span>
+                            <span class="carousel-dot"></span>
+                            <span class="carousel-dot"></span>
+                        </div>
+                    </div>
+                    <div class="room-features mb-4">
+                        <p class="text-muted">Pilih jenis kamar di Villa Agathis sesuai kebutuhan Anda. Setiap pilihan dirancang untuk memberikan kenyamanan maksimal selama menginap.</p>
+                        <div class="feature-item"><i class="fas fa-bed"></i> Berbagai Pilihan Ukuran Tempat Tidur</div>
+                        <div class="feature-item"><i class="fas fa-bath"></i> Kamar Mandi Dalam</div>
+                        <div class="feature-item"><i class="fas fa-wifi"></i> Akses Wi-Fi Gratis</div>
+                        <div class="feature-item"><i class="fas fa-parking"></i> Area Parkir Luas</div>
+                        <a href="contact.html" class="mt-2"><i class="fas fa-phone-alt"></i> Hubungi Kami untuk Info Lebih Lanjut</a>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="room-options-header">
+                        <h6 class="col-header-1">Jenis Kamar</h6>
+                        <h6 class="col-header-2">Tamu</h6>
+                        <h6 class="col-header-3">Harga/kamar/malam</h6>
+                    </div>
+                    
+                    <div id="roomOptionsList">
+                        <div class="room-option-item" data-room-type="Standard Agathis" data-price="300000" data-capacity="2">
+                            <div class="room-option-details">
+                                <h6>Standard Agathis</h6>
+                                <p class="sub-info"><i class="fas fa-bed"></i> 1 Kasur Double</p>
+                                <ul class="benefits">
+                                    <li><i class="fas fa-check-circle"></i> AC</li>
+                                    <li><i class="fas fa-check-circle"></i> TV</li>
+                                    <li><i class="fas fa-check-circle"></i> Kamar Mandi Dalam</li>
+                                </ul>
+                                <p class="policy"><i class="fas fa-exclamation-triangle"></i> Syarat & Ketentuan berlaku</p>
+                            </div>
+                            <div class="room-option-capacity">
+                                <i class="fas fa-user-friends"></i> 2
+                            </div>
+                            <div class="room-option-price-action">
+                                <span class="current-price">Rp 300.000</span>
+                                <span class="tax-info">per malam (belum termasuk pajak)</span>
+                                <span class="available-rooms">Tersedia: 4 Kamar</span>
+                                <button class="btn btn-primary btn-select">Pesan Sekarang</button>
+                            </div>
+                        </div>
+
+                        <div class="room-option-item" data-room-type="Family Agathis" data-price="750000" data-capacity="4">
+                            <div class="room-option-details">
+                                <h6>Family Agathis</h6>
+                                <p class="sub-info"><i class="fas fa-bed"></i> 2 Kasur Double</p>
+                                <ul class="benefits">
+                                    <li><i class="fas fa-check-circle"></i> AC</li>
+                                    <li><i class="fas fa-check-circle"></i> Smart TV</li>
+                                    <li><i class="fas fa-check-circle"></i> Kamar Mandi Dalam</li>
+                                    <li><i class="fas fa-check-circle"></i> Area Duduk</li>
+                                </ul>
+                                <p class="policy"><i class="fas fa-exclamation-triangle"></i> Syarat & Ketentuan berlaku</p>
+                            </div>
+                            <div class="room-option-capacity">
+                                <i class="fas fa-user-friends"></i> 4
+                            </div>
+                            <div class="room-option-price-action">
+                                <span class="current-price">Rp 750.000</span>
+                                <span class="tax-info">per malam (belum termasuk pajak)</span>
+                                <span class="available-rooms">Tersedia: 2 Kamar</span>
+                                <button class="btn btn-primary btn-select">Pesan Sekarang</button>
+                            </div>
+                        </div>
+                        
+                        <div class="room-option-item" data-room-type="All In Villa" data-price="2700000" data-capacity="12">
+                            <div class="room-option-details">
+                                <h6>All In Villa</h6>
+                                <p class="sub-info"><i class="fas fa-home"></i> Seluruh unit Villa Agathis</p>
+                                <ul class="benefits">
+                                    <li><i class="fas fa-check-circle"></i> 6 Kamar</li>
+                                    <li><i class="fas fa-check-circle"></i> Akses Seluruh Fasilitas Villa</li>
+                                    <li><i class="fas fa-check-circle"></i> Ideal untuk Rombongan/Acara</li>
+                                </ul>
+                                <p class="policy"><i class="fas fa-exclamation-triangle"></i> Syarat & Ketentuan berlaku</p>
+                            </div>
+                            <div class="room-option-capacity">
+                                <i class="fas fa-users"></i> 12
+                            </div>
+                            <div class="room-option-price-action">
+                                <span class="current-price">Rp 2.700.000</span>
+                                <span class="tax-info">per malam (belum termasuk pajak)</span>
+                                <span class="available-rooms">Tersedia: 1 Unit</span>
+                                <button class="btn btn-primary btn-select">Pesan Sekarang</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid footer text-white mt-5 pt-5 px-0 position-relative overlay-top">
+        <div class="row mx-0 pt-5 px-sm-3 px-lg-5 mt-4">
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Get In Touch</h4>
+                <p><i class="fa fa-map-marker-alt mr-2"></i>Jl. Agathis Raya, Desa [Nama Desa/Kota], [Kabupaten], [Provinsi]</p>
+                <p><i class="fa fa-phone-alt mr-2"></i>08XX-XXXX-XXXX (Marketing Villa Agathis)</p>
+                <p class="m-0"><i class="fa fa-envelope mr-2"></i>info@villaagathis.co.id</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Follow Us</h4>
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="https://twitter.com/login" target="_blank"><i
+                                class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="https://www.facebook.com/BaturradenPalawi?locale=id_ID" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="https://www.linkedin.com/login" target="_blank"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-outline-light btn-lg-square"
+                                href="https://www.instagram.com/palawiresortbaturraden/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Open Hours</h4>
+                <div>
+                    <h6 class="text-white text-uppercase">Setiap Hari</h6>
+                    <p>00.00 AM - 24.00 PM</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Subscribe</h4>
+                <p>Dapatkan informasi terbaru dan penawaran spesial dari Villa Agathis!</p>
+                <div class="w-100">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-light" style="padding: 25px;"
+                                placeholder="Email Anda">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary font-weight-bold px-3">Daftar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid text-center text-white border-top mt-4 py-4 px-sm-3 px-md-5"
+            style="border-color: rgba(256, 256, 256, .1) !important;">
+            <p class="mb-2 text-white">Copyright 2024 © Villa Agathis. All Rights Reserved.</p>
+            <p class="m-0 text-white">Dibuat dengan ❤️ oleh Kevin IT Support Klaster Banyumas</p>
+        </div>
+    </div>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script>
+        // Tambahkan event listener untuk semua tombol "Pesan Sekarang"
+        document.querySelectorAll('.btn-select').forEach(button => {
+            button.addEventListener('click', function() {
+                const roomItem = this.closest('.room-option-item');
+                const roomType = roomItem.dataset.roomType;
+                const price = roomItem.dataset.price;
+                const capacity = roomItem.dataset.capacity;
+                const villaName = "Villa Agathis"; // Nama villa ini sudah ditentukan
+
+                // Redirect ke halaman pemesanan (pemesanan.html) dengan parameter URL
+                // Contoh: pemesanan.html?villa=Villa%20Agathis&roomType=Standard%20Agathis&price=300000&capacity=2
+                window.location.href = `pemesanan.html?villa=${encodeURIComponent(villaName)}&roomType=${encodeURIComponent(roomType)}&price=${encodeURIComponent(price)}&capacity=${encodeURIComponent(capacity)}`;
+            });
+        });
+
+        // JavaScript untuk Back to Top (jika belum ada di main.js atau script.js)
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.back-to-top').fadeIn('slow');
+            } else {
+                $('.back-to-top').fadeOut('slow');
+            }
+        });
+        $('.back-to-top').click(function () {
+            $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo'); // Pastikan easing tersedia
+            return false;
+        });
+
+        // Fungsi untuk carousel dots (jika ada carousel gambar)
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        const roomImage = document.querySelector('.room-image-carousel img');
+        const images = [
+            'img/agathis_view_1.png', // Ganti dengan path gambar asli Villa Agathis
+            'img/agathis_view_2.png',
+            'img/agathis_view_3.png',
+            'img/agathis_view_4.png'
+        ]; // Ganti dengan path gambar asli Villa Agathis Anda
+
+        let currentImageIndex = 0; // Untuk melacak gambar aktif
+
+        carouselDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                carouselDots.forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                roomImage.src = images[index];
+                currentImageIndex = index; // Update index gambar aktif
+            });
+        });
+
+        // Optional: tambahkan fungsi auto-slide atau navigasi panah jika diperlukan
+        // Contoh sederhana untuk auto-slide setiap 5 detik
+        setInterval(() => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            carouselDots.forEach(d => d.classList.remove('active'));
+            carouselDots[currentImageIndex].classList.add('active');
+            roomImage.src = images[currentImageIndex];
+        }, 5000); // Ganti gambar setiap 5 detik
+    </script>
+
+</body>
+</html>

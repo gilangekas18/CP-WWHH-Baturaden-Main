@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Registrasi</title>
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Daftar Akun Baru</h2>
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" name="name" required autocomplete="name">
+                <!-- Wadah untuk pesan error 'name' -->
+                <div class="error-message-inline" id="name-error"></div>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+                <!-- Wadah untuk pesan error 'email' -->
+                <div class="error-message-inline" id="email-error"></div>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="new-password">
+                <!-- Wadah untuk pesan error 'password' -->
+                <div class="error-message-inline" id="password-error"></div>
+            </div>
+            <div class="input-group">
+                <label for="password_confirmation">Konfirmasi Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                <!-- Wadah untuk pesan error 'password_confirmation' (jika tidak cocok) -->
+                <div class="error-message-inline" id="password_confirmation-error"></div>
+            </div>
+            <button type="submit">Daftar</button>
+            
+            <!-- Wadah untuk pesan sukses atau error umum -->
+            <div id="form-message" class="message-container"></div>
+
+        </form>
+        <p class="login-link">Sudah punya akun? <a href="login.html">Login di sini</a></p>
+    </div>
+
+    <script type="module" src="/js/api/register.js"></script>
+</body>
+</html>
