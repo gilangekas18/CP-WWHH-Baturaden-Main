@@ -240,10 +240,15 @@ ipconfig
  ```bash
 cd "\Lokasi_file_backend"
 ```
-3.  **Jalankan laravel dengan ip server lokal**
+3.  **save migrasi/ tabel baru**
+ ```bash
+php artisan migration
+```
+4.  **Jalankan laravel dengan ip server lokal**
  ```bash
 php artisan serve --host=ip_lokal_anda --port=8000
 ```
+
 ---
 
 ## 🔗 Koneksi Backend & Frontend
