@@ -1,6 +1,6 @@
 # 🏡 Sistem Pemesanan Villa - RESTful API + Frontend
 
-Proyek ini adalah **sistem pemesanan villa** berbasis web dengan **backend RESTful API** dan frontend berbasis Laravel Blade.  
+Proyek ini adalah **sistem pemesanan villa** berbasis web dengan **backend RESTful API** dan frontend yang terhubung menggunakan bantuan IP Local.  
 Sistem ini memungkinkan pengguna melakukan pemesanan online untuk 3 tipe villa, dilengkapi dengan **lapisan keamanan API** dan manajemen role.
 
 ---
