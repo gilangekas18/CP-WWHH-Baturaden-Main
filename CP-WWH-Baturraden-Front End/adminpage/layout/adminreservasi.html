@@ -36,6 +36,12 @@
                     <li>
                         <a href="financial.html"><i class="fas fa-dollar-sign"></i> <span>Financial</span></a>
                     </li>
+
+                    <li id="auth-button-container">
+                        <a href="#">
+                            <i class="fas fa-right-from-bracket"></i> Logout
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -57,16 +63,14 @@
                     <div class="section-header-reservation">
                         <h3>Reservation List</h3>
                         <div class="reservation-actions">
-                            <div class="action-item">
-                                <i class="fas fa-share-alt"></i> <span>Can Share</span>
-                            </div>
-                            <div class="action-item">
+                            <div class="action-item download-btn">
                                 <i class="fas fa-download"></i> <span>Download</span>
                             </div>
                             <div class="action-item date-filter">
-                                <input type="text" value="20 Jan - 20 Jan 2025" readonly>
+                                <input type="text" id="dateRange" placeholder="Select date range">
                                 <i class="fas fa-calendar-alt"></i>
                             </div>
+
                             <button class="add-booking-btn" id="addBookingBtn"><i class="fas fa-plus"></i> Add
                                 Booking</button>
                         </div>
@@ -75,7 +79,6 @@
                     <div class="table-container">
                         <table>
                             <thead>
-                                <!-- PERUBAHAN: Header tabel disesuaikan dengan data asli -->
                                 <tr>
                                     <th>ID</th>
                                     <th>Booker Details</th>
@@ -84,14 +87,25 @@
                                     <th>Check-out</th>
                                     <th>Price</th>
                                     <th>Status</th>
+                                    <th>num_room</th>
+                                    <th>num_guests</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <!-- PERUBAHAN: Isi tabel dikosongkan dan diberi ID -->
+
                             <tbody id="reservation-table-body">
-                                <!-- Data dummy dihapus, akan diisi oleh JavaScript -->
+
                             </tbody>
                         </table>
+
+                        <div id="bookingDetailModal" class="modal">
+                            <div class="modal-content">
+                                <span id="closeDetailModal" class="close">&times;</span>
+                                <h3>Detail Reservasi</h3>
+                                <div id="bookingDetailContent"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -99,7 +113,7 @@
     </div>
 
     <!-- Modal "Add Booking" Anda yang sudah ada (tidak diubah) -->
-     <div class="modal" id="selectVillaModal">
+    <div class="modal" id="selectVillaModal">
         <div class="modal-content">
             <span class="close-button" id="closeVillaModal">&times;</span>
             <h2>Select Villa for Booking</h2>
@@ -152,6 +166,22 @@
 
 
     <script type="module" src="/adminpage/js/adminreservasi.js"></script>
+
+    <!-- flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="/adminpage/js/adminreservasi.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#dateRange", {
+                mode: "range",
+                dateFormat: "d M Y",
+                onClose: applyFilters
+            });
+        });
+    </script>
+
 </body>
 
 </html>

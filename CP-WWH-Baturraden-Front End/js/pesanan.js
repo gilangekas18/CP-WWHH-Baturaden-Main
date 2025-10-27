@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // === PENGATURAN & FUNGSI API ==========================
-    const API_URL = "http://192.168.248.194:8000/api"; // Pastikan IP ini benar dan bisa diakses!
+    const API_URL = "http://localhost:8000/api"; // \URL IP
+
 
     async function fetchRoomTypeById(roomTypeId) {
         try {
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             if (!response.ok) {
                 const errorMessage = data.message || 'Gagal membuat booking.';
-                // PERBAIKAN: Membuat daftar error validasi lebih rapi
+
                 let errorDetails = '';
                 if (data.errors) {
                     errorDetails = '<ul>' + Object.values(data.errors).map(e => `<li>${e[0]}</li>`).join('') + '</ul>';
@@ -80,10 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ======================================================
+
     // === LOGIKA HALAMAN PEMESANAN =========================
-    // ======================================================
-    
+
     // Ambil semua elemen penting dari halaman
     const form = document.getElementById('formPemesanan');
     const roomInfoDiv = document.getElementById('selectedVillaRoomInfo');
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const roomPriceSubtotal = document.getElementById('roomPriceSubtotal');
     const alertContainer = document.getElementById('alert-container');
     const submitButton = document.getElementById('submitButton');
-    
+
     // Ambil juga elemen input tersembunyi
     const hiddenRoomTypeIdInput = document.getElementById('room_type_id');
     const hiddenTotalPriceInput = document.getElementById('total_price');
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             selectedRoomData = await fetchRoomTypeById(roomTypeId);
-            
+
             roomInfoDiv.innerHTML = `<strong>${selectedRoomData.villa.name}</strong> - ${selectedRoomData.name}`;
             roomNameDisplay.textContent = `${selectedRoomData.villa.name} - ${selectedRoomData.name}`;
 
@@ -198,20 +198,74 @@ document.addEventListener('DOMContentLoaded', () => {
         alertContainer.innerHTML = '';
 
         const formData = new FormData(form);
-        
+
         const isForOtherValue = document.querySelector('input[name="guestType"]:checked').value;
         formData.append('is_for_other_guest', isForOtherValue === 'true' ? '1' : '0');
-        formData.delete('guestType');
+
+        if (isForOtherValue !== 'true') {
+            formData.delete('guest_name');
+            formData.delete('guest_email');
+            formData.delete('guest_phone');
+        }
+
+
+
+
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+
+        const proofFileInput = document.getElementById('proof_file');
+        if (proofFileInput) {
+            formData.delete('proof_file');
+        }
 
         try {
+            // 1️⃣ Buat booking
             const result = await createBooking(formData);
             showAlert(`Pemesanan berhasil dibuat! ID Booking Anda: <strong>${result.data.id}</strong>`, 'success');
-            form.reset();
-            setTimeout(() => {
-                // Arahkan ke halaman sukses atau daftar pesanan user
-                // window.location.href = 'sukses.html';
-            }, 3000);
 
+            // 2️⃣ Jika metode pembayaran QRIS, upload bukti
+            const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+            if (selectedPaymentMethod === 'qris') {
+                const proofFileInput = document.getElementById('proof_file');
+                if (!proofFileInput || proofFileInput.files.length === 0) {
+                    showAlert('Silakan upload bukti transfer Qris.', 'danger');
+                    return;
+                }
+
+                const paymentFormData = new FormData();
+                paymentFormData.append('booking_id', result.data.id);
+                paymentFormData.append('method', 'qris');
+                paymentFormData.append('proof_file', proofFileInput.files[0]);
+
+                const token = localStorage.getItem('authToken');
+                const paymentResponse = await fetch(`${API_URL}/payments`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: paymentFormData
+                });
+
+                const paymentResult = await paymentResponse.json();
+
+                if (paymentResponse.status >= 400) {
+                    let errorMessage = paymentResult.message || 'Gagal upload bukti pembayaran.';
+                    if (paymentResult.errors) {
+                        errorMessage += '<ul>' + Object.values(paymentResult.errors).map(e => `<li>${e[0]}</li>`).join('') + '</ul>';
+                    }
+                    showAlert(errorMessage, 'danger');
+                    return;
+                }
+
+
+                showAlert('Bukti pembayaran berhasil diunggah!', 'success');
+            }
+
+
+            form.reset();
         } catch (error) {
             showAlert(`Gagal membuat pemesanan: ${error.message}`, 'danger');
         } finally {
@@ -219,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitButton.textContent = 'Kirim Pemesanan';
         }
     });
+
 
     const showAlert = (message, type = 'info') => {
         alertContainer.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;

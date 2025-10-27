@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            // Asumsi user yang login yang melakukan booking.
+            //  user yang login yang melakukan booking.
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('room_type_id')->constrained('room_types');
             $table->date('check_in_date');

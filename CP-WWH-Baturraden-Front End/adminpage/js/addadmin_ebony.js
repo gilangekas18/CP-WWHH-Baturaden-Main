@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. KONFIGURASI & VARIABEL GLOBAL ---
-    const API_URL = "http://192.168.248.194:8000/api"; // Sesuaikan jika IP Anda berubah
+    const API_URL = "http://localhost:8000/api"; 
     const VILLA_ID = 1; // ID untuk Villa Ebony
     
     // --- 2. SELEKSI SEMUA ELEMEN DOM ---

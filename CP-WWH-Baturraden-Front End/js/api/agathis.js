@@ -1,6 +1,3 @@
-/**
- * Fungsi ini akan berjalan otomatis saat halaman Villa Agathis selesai dimuat.
- */
 document.addEventListener('DOMContentLoaded', () => {
     // Cari tombol "Pesan Sekarang" berdasarkan ID spesifik untuk Agathis
     const pesanButton = document.getElementById('pesan-agathis-btn');
@@ -27,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // 4. JIKA BELUM LOGIN: Tampilkan peringatan dan arahkan ke halaman login
             alert('Anda harus login terlebih dahulu untuk dapat memesan.');
-            window.location.href = 'login.html'; // Ganti dengan nama file halaman login Anda
+            window.location.href = 'includes/login.html'; 
         }
     });
 });

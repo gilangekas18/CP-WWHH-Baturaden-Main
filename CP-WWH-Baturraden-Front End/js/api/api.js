@@ -1,4 +1,4 @@
-const API_URL = "http://192.168.248.194:8000/api"; // Ganti jika IP Anda berubah
+const API_URL = "http://localhost:8000/api"; // Ganti jika IP local
 
 /**
  * Helper function untuk mengambil token dari localStorage.
@@ -9,9 +9,7 @@ export const getAuthToken = () => {
 };
 
 /**
- * ======================================================
- * === FUNGSI LOGIN UNIVERSAL (BARU) ====================
- * ======================================================
+ * FUNGSI LOGIN UNIVERSAL (BARU)
  * Fungsi untuk login user & admin melalui satu endpoint.
  */
 export async function unifiedLogin(email, password) {
@@ -43,7 +41,6 @@ export async function unifiedLogin(email, password) {
 }
 
 
-// --- Fungsi-fungsi lain yang tetap sama ---
 
 export async function fetchAllVillas() {
     try {

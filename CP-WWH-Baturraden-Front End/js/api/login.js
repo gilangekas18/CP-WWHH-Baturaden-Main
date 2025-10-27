@@ -1,4 +1,4 @@
-// Import fungsi login universal dari pusat kontrol API kita
+// Import fungsi login universal dari pusat kontrol API 
 import { unifiedLogin } from './api.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,9 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Panggil fungsi universal dari api.js
                 const loginData = await unifiedLogin(email, password);
 
-                // =================================================================
-                // === PENTING: Tampilkan data dari backend untuk debugging =======
-                // =================================================================
+                // Simpan token login ke localStorage agar bisa digunakan di seluruh aplikasi
+                if (loginData.access_token) {
+                    localStorage.setItem('authToken', loginData.access_token);
+                }
+
+
+                // Tampilkan data dari backend untuk debugging 
                 console.log('Data Lengkap dari Backend:', loginData);
 
                 formMessageDiv.textContent = 'Login berhasil! Mengarahkan...';
@@ -34,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // --- LOGIKA PENGALIHAN BERDASARKAN PERAN (ROLE) ---
                 let redirectTo = '/index.html'; // Halaman default untuk user biasa
 
-                // PERBAIKAN: Menggunakan optional chaining (?.) agar lebih aman.
+                // Menggunakan optional chaining (?.) agar lebih aman.
                 // Kode ini akan mencoba mengakses loginData.user.roles
                 // tanpa menyebabkan error jika 'user' atau 'roles' tidak ada.
                 const userRoles = loginData?.user?.roles;
@@ -60,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 formMessageDiv.textContent = error.message;
                 formMessageDiv.classList.add('error');
-                
+
                 submitButton.disabled = false;
                 submitButton.textContent = 'Masuk';
             }

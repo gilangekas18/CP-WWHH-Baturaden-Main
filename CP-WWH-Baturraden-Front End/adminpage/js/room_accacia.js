@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. KONFIGURASI & VARIABEL GLOBAL ---
-    const API_URL = "http://192.168.248.194:8000/api"; 
+    const API_URL = "http://localhost:8000/api"; 
     const ROOM_TYPE_ID = 7; // ID untuk "All In Villa Accacia"
 
     // --- 2. SELEKSI SEMUA ELEMEN DOM ---

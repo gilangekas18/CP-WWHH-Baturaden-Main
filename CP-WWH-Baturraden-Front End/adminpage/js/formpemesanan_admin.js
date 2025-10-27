@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. KONFIGURASI & SELEKSI ELEMEN ---
-    const API_URL = "http://192.168.248.194:8000/api";
-    let selectedRoomData = null; // Untuk menyimpan detail kamar yang dipilih
+    const API_URL = "http://localhost:8000/api";
+    let selectedRoomData = null; 
 
     // Seleksi elemen-elemen dari form dan ringkasan
     const form = document.getElementById('formPemesanan');

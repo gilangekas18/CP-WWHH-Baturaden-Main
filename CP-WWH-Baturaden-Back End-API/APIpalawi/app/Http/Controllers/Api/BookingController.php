@@ -30,6 +30,8 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('Data diterima di BookingController:', $request->all());
+
         // Validator tabel
         $validator = Validator::make($request->all(), [
             'room_type_id' => 'required|exists:room_types,id',
@@ -48,10 +50,13 @@ class BookingController extends Controller
             'extra_beds' => 'nullable|integer|min:0',
             'notes' => 'nullable|string',
             'payment_method' => 'required|in:cash,qris',
-            'proof_file' => 'required_if:payment_method,qris|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            // 'proof_file' => 'required_if:payment_method,qris|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            'proof_file' => 'nullable',
+
         ]);
 
         if ($validator->fails()) {
+            Log::error('Validasi gagal di BookingController:', $validator->errors()->toArray());
             return response()->json($validator->errors(), 422);
         }
 

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. KONFIGURASI & VARIABEL GLOBAL ---
-    const API_URL = "http://192.168.248.194:8000/api"; 
+    const API_URL = "http://localhost:8000/api"; 
     const VILLA_ID = 1; // ID untuk Villa Ebony
     let allRoomTypes = []; // Menyimpan semua data kamar
     let currentlySelectedRoomId = null; // Menyimpan ID kamar yang sedang ditampilkan di detail
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (roomIndex !== -1) {
                 allRoomTypes[roomIndex].price_per_night = result.data.price_per_night;
             }
-            renderRoomList(allRoomTypes); // Render ulang daftar kiri
-            updateRoomDetailPanel(roomId); // Render ulang panel kanan
+            renderRoomList(allRoomTypes);
+            updateRoomDetailPanel(roomId); 
             closeModal();
 
         } catch (error) {
@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentlySelectedRoomId = room.id;
         detailRoomName.textContent = room.name;
         detailRoomPrice.textContent = `Harga Per Malam Rp ${Number(room.price_per_night).toLocaleString('id-ID')}`;
-        // Logika fasilitas bisa ditambahkan di sini
         detailFacilitiesList.innerHTML = `<span><i class="fas fa-check-circle"></i> Fasilitas A</span><span><i class="fas fa-check-circle"></i> Fasilitas B</span>`;
     }
 

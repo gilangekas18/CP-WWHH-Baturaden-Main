@@ -1,27 +1,51 @@
-// =======================================================================
-// === FILE JAVASCRIPT GABUNGAN UNTUK HALAMAN RESERVASI ADMIN ==========
-// =======================================================================
 document.addEventListener('DOMContentLoaded', function () {
+    const API_URL = "http://localhost:8000/api";
 
-    // -------------------------------------------------------------------
-    // --- 1. KEAMANAN & INISIALISASI DASAR ------------------------------
-    // -------------------------------------------------------------------
+    // --- 4. SELEKSI SEMUA ELEMEN DOM -----------------------------------
+    // Elemen untuk Data & Notifikasi
+    const tableBody = document.getElementById('reservation-table-body');
+    const alertContainer = document.getElementById('alert-container');
+    const searchInput = document.getElementById('searchInput');
 
-    // Cek otentikasi sebelum menjalankan kode apapun
-    if (!localStorage.getItem('authToken')) {
-        alert('Anda harus login sebagai admin untuk mengakses halaman ini.');
-        window.location.href = '/login.html'; // Ganti dengan halaman login Anda
-        return;
-    }
+    // Elemen untuk Sidebar
+    const sidebar = document.getElementById('sidebar');
+    const menuToggleBtn = document.getElementById('menuToggleBtn');
+    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+    const sidebarOverlay = document.getElementById('overlay'); // Overlay umum untuk sidebar
+    const navLinks = document.querySelectorAll('.sidebar .main-nav ul li');
+
+    //fitur download, secarh, date
+    const dateFilterInput = document.querySelector('.date-filter input');
+    const downloadBtn = document.querySelector('.download-btn');
+
+    // Elemen untuk Modal Update Status
+    const updateModal = document.getElementById('updateStatusModal');
+    const updateModalOverlay = document.getElementById('updateModalOverlay');
+    const closeUpdateModalBtn = document.getElementById('closeUpdateModal');
+    const updateForm = document.getElementById('updateStatusForm');
+    const hiddenBookingIdInput = document.getElementById('hiddenBookingId');
+    const modalBookingIdText = document.getElementById('modalBookingId');
+    const statusSelect = document.getElementById('bookingStatus');
+
+    // Elemen untuk Modal Add Booking (Villa)
+    const addBookingBtn = document.getElementById('addBookingBtn');
+    const selectVillaModal = document.getElementById('selectVillaModal');
+    const closeVillaModalBtn = document.getElementById('closeVillaModal');
+    const addBookingModalOverlay = document.getElementById('addBookingModalOverlay'); // Overlay khusus modal
+    const selectVillaButtons = document.querySelectorAll('.villa-card .select-villa-btn');
 
     // Variabel global untuk menyimpan data dari API
     let allBookings = [];
-    const API_URL = "http://192.168.248.194:8000/api"; // Sesuaikan jika perlu
 
+    // --- 1. KEAMANAN & INISIALISASI DASAR ------------------------------
+    // Cek otentikasi sebelum menjalankan kode apapun
+    if (!localStorage.getItem('authToken')) {
+        alert('Anda harus login sebagai admin untuk mengakses halaman ini.');
+        window.location.href = '/includes/login.html'; 
+        return;
+    }
 
-    // -------------------------------------------------------------------
     // --- 2. FUNGSI-FUNGSI API (Komunikasi dengan Backend) --------------
-    // -------------------------------------------------------------------
 
     async function fetchAllBookings() {
         const token = localStorage.getItem('authToken');
@@ -39,6 +63,89 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error(errorData.message || 'Gagal mengambil data booking.');
         }
         return await response.json();
+    }
+
+    // --- Fungsi ambil tanggal dari input text ---
+    function getFilterDate() {
+        if (!dateFilterInput || !dateFilterInput.value) return null;
+        // Format input: "20 Jan - 20 Jan 2025" => ambil tanggal awal
+        const dateStr = dateFilterInput.value.split('-')[0].trim();
+        return new Date(dateStr);
+    }
+
+    // --- Fungsi filter data berdasarkan pencarian dan tanggal ---
+    window.applyFilters = function () {
+        if (!allBookings) return allBookings;
+
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterDate = getFilterDate();
+
+        // Jika tidak ada search dan tidak ada filter tanggal, tampilkan semua
+        if (!searchTerm && !filterDate) {
+            renderTable(allBookings);
+            return allBookings;
+        }
+
+        const filtered = allBookings.filter(b => {
+            const matchesName = searchTerm
+                ? b.booker_name && b.booker_name.toLowerCase().includes(searchTerm)
+                : true;
+
+            let matchesDate = true;
+            if (filterDate) {
+                const checkIn = new Date(b.check_in_date);
+                matchesDate = checkIn.toDateString() === filterDate.toDateString();
+            }
+
+            return matchesName && matchesDate;
+        });
+
+        renderTable(filtered);
+        return filtered; // Mengembalikan data yang sedang tampil
+    }
+
+    // --- Event Listener untuk pencarian dan tanggal ---
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (dateFilterInput) dateFilterInput.addEventListener('input', applyFilters);
+
+    // --- Fungsi Download CSV ---
+    function downloadCSV(data) {
+        if (!data || data.length === 0) {
+            alert('Tidak ada data untuk diunduh.');
+            return;
+        }
+
+        const headers = ["ID", "Booker Name", "Phone", "Room", "Check-in", "Check-out", "Price", "Status"];
+        const rows = data.map(b => [
+            b.id,
+            b.booker_name || '',
+            b.booker_phone || '',
+            b.room_type ? `${b.num_rooms}x ${b.room_type.name}` : '',
+            b.check_in_date,
+            b.check_out_date,
+            b.total_price,
+            b.status
+        ]);
+
+        const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "reservations.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // --- Event Listener tombol Download ---
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+            const filteredData = applyFilters(); // ambil data hasil filter terakhir
+            downloadCSV(filteredData);
+        });
     }
 
     async function updateBookingStatus(bookingId, newStatus) {
@@ -68,39 +175,113 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!response.ok) throw new Error('Gagal menghapus booking.');
         return await response.json();
     }
-
-
-    // -------------------------------------------------------------------
     // --- 3. FUNGSI-FUNGSI UI & BANTUAN (Helpers) -----------------------
-    // -------------------------------------------------------------------
 
     // --- Fungsi untuk Tabel Data ---
     function renderTable(bookings) {
-        if (!tableBody) return;
-        tableBody.innerHTML = '';
-        if (bookings.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Tidak ada data reservasi ditemukan.</td></tr>';
+    if (!tableBody) return;
+    tableBody.innerHTML = '';
+
+    if (!Array.isArray(bookings) || bookings.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="10" style="text-align:center;">Tidak ada data reservasi ditemukan.</td></tr>';
+        return;
+    }
+
+    bookings.forEach(booking => {
+        const status = (booking.status || 'pending').toLowerCase();
+        const row = document.createElement('tr');
+        row.dataset.id = booking.id;
+        row.innerHTML = `
+            <td>${booking.id}</td>
+            <td>
+                <div>${booking.booker_name || '-'}</div>
+                <small>${booking.booker_phone || '-'}</small>
+            </td>
+            <td>${booking.room_type ? booking.room_type.name : '-'}</td>
+            <td>${formatDate(booking.check_in_date)}</td>
+            <td>${formatDate(booking.check_out_date)}</td>
+            <td>${formatCurrency(booking.total_price)}</td>
+            <td><span class="status-badge ${status}">${booking.status || '-'}</span></td>
+            <td>${booking.num_rooms || 0}</td>
+            <td>${booking.num_guests || 0}</td>
+            <td>
+                <button class="action-btn update-btn" data-id="${booking.id}" data-status="${booking.status}" title="Update Status"><i class="fas fa-edit"></i></button>
+                <button class="action-btn delete-btn" data-id="${booking.id}" title="Delete Booking"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+// === Klik baris untuk menampilkan detail ===
+if (tableBody) {
+    tableBody.addEventListener('click', (event) => {
+        const row = event.target.closest('tr');
+        if (!row) return;
+
+        const bookingId = row.dataset.id;
+        const selectedBooking = allBookings.find(b => b.id == bookingId);
+        if (!selectedBooking) return;
+
+        // Hapus detail lain jika ada
+        document.querySelectorAll('.detail-row').forEach(r => r.remove());
+
+        // Jika sudah terbuka, tutup
+        const existing = document.querySelector(`#detail-row-${bookingId}`);
+        if (existing) {
+            existing.remove();
             return;
         }
-        bookings.forEach(booking => {
-            const row = document.createElement('tr');
-            const status = (booking.status || 'pending').toLowerCase();
-            row.innerHTML = `
-                <td data-label="ID"><strong>${booking.id}</strong></td>
-                <td data-label="Booker Details"><div>${booking.booker_name || 'N/A'}</div><small>${booking.booker_phone || ''}</small></td>
-                <td data-label="Room Details">${booking.room_type ? `${booking.num_rooms}x ${booking.room_type.name}` : 'N/A'}</td>
-                <td data-label="Check-in">${formatDate(booking.check_in_date)}</td>
-                <td data-label="Check-out">${formatDate(booking.check_out_date)}</td>
-                <td data-label="Price">${formatCurrency(booking.total_price)}</td>
-                <td data-label="Status"><span class="status-badge ${status}">${booking.status}</span></td>
-                <td data-label="Actions">
-                    <button class="action-btn update-btn" data-id="${booking.id}" data-status="${booking.status}" title="Update Status"><i class="fas fa-edit"></i></button>
-                    <button class="action-btn delete-btn" data-id="${booking.id}" title="Delete Booking"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
+
+        // Ambil relasi payment (kalau ada)
+        const payment = selectedBooking.payment || null;
+        const paymentMethod = payment?.method ? payment.method.toUpperCase() : '-';
+        const paymentStatus = payment?.status || '-';
+        const paymentProof = payment?.proof_of_payment || null;
+
+        // Buat baris detail
+        const detailRow = document.createElement('tr');
+        detailRow.classList.add('detail-row');
+        detailRow.id = `detail-row-${bookingId}`;
+        detailRow.innerHTML = `
+            <td colspan="10" style="background-color:#f9f9f9;">
+                <div style="padding:10px; line-height:1.6;">
+                    <h5 style="margin-bottom:8px;">📋 Detail Lengkap Reservasi</h5>
+                    <strong>ID Booking:</strong> ${selectedBooking.id}<br>
+                    <strong>Nama Pemesan:</strong> ${selectedBooking.booker_name || '-'}<br>
+                    <strong>Email Pemesan:</strong> ${selectedBooking.booker_email || '-'}<br>
+                    <strong>No. Telepon:</strong> ${selectedBooking.booker_phone || '-'}<br>
+                    <strong>Tamu Lain (Jika Ada):</strong> ${selectedBooking.guest_name || '-'}<br>
+                    <strong>Tipe Kamar:</strong> ${selectedBooking.room_type?.name || '-'}<br>
+                    <strong>Check-in:</strong> ${formatDate(selectedBooking.check_in_date)}<br>
+                    <strong>Check-out:</strong> ${formatDate(selectedBooking.check_out_date)}<br>
+                    <strong>Jumlah Kamar:</strong> ${selectedBooking.num_rooms}<br>
+                    <strong>Jumlah Tamu:</strong> ${selectedBooking.num_guests}<br>
+                    <strong>Harga Total:</strong> ${formatCurrency(selectedBooking.total_price)}<br>
+                    <strong>Status Reservasi:</strong> ${selectedBooking.status}<br>
+                    <hr>
+                    <h5 style="margin-bottom:8px;">💳 Detail Pembayaran</h5>
+                    <strong>Metode:</strong> ${paymentMethod}<br>
+                    <strong>Status Pembayaran:</strong> ${paymentStatus}<br>
+                    ${
+                        paymentProof
+                        ? `<div style="margin-top:8px;">
+                                <strong>Bukti Pembayaran:</strong><br>
+                                <img src="/storage/${paymentProof}" alt="Bukti Pembayaran" width="200" style="border:1px solid #ccc; margin-top:5px;">
+                            </div>`
+                        : '<em>Tidak ada bukti pembayaran.</em>'
+                    }
+                </div>
+            </td>
+        `;
+
+        // Sisipkan baris di bawah data utama
+        row.insertAdjacentElement('afterend', detailRow);
+    });
+}
+
+
+
 
     // --- Fungsi untuk Modal Update ---
     function openUpdateModal(bookingId, currentStatus) {
@@ -119,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateModalOverlay.classList.remove('active');
         }
     }
-    
+
     // --- Fungsi untuk Modal Add Booking (Villa) ---
     function openVillaModal() {
         if (selectVillaModal && addBookingModalOverlay) {
@@ -186,42 +367,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // -------------------------------------------------------------------
-    // --- 4. SELEKSI SEMUA ELEMEN DOM -----------------------------------
-    // -------------------------------------------------------------------
 
-    // Elemen untuk Data & Notifikasi
-    const tableBody = document.getElementById('reservation-table-body');
-    const alertContainer = document.getElementById('alert-container');
-    const searchInput = document.getElementById('searchInput');
-
-    // Elemen untuk Sidebar
-    const sidebar = document.getElementById('sidebar');
-    const menuToggleBtn = document.getElementById('menuToggleBtn');
-    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-    const sidebarOverlay = document.getElementById('overlay'); // Overlay umum untuk sidebar
-    const navLinks = document.querySelectorAll('.sidebar .main-nav ul li');
-
-    // Elemen untuk Modal Update Status
-    const updateModal = document.getElementById('updateStatusModal');
-    const updateModalOverlay = document.getElementById('updateModalOverlay');
-    const closeUpdateModalBtn = document.getElementById('closeUpdateModal');
-    const updateForm = document.getElementById('updateStatusForm');
-    const hiddenBookingIdInput = document.getElementById('hiddenBookingId');
-    const modalBookingIdText = document.getElementById('modalBookingId');
-    const statusSelect = document.getElementById('bookingStatus');
-
-    // Elemen untuk Modal Add Booking (Villa)
-    const addBookingBtn = document.getElementById('addBookingBtn');
-    const selectVillaModal = document.getElementById('selectVillaModal');
-    const closeVillaModalBtn = document.getElementById('closeVillaModal');
-    const addBookingModalOverlay = document.getElementById('addBookingModalOverlay'); // Overlay khusus modal
-    const selectVillaButtons = document.querySelectorAll('.villa-card .select-villa-btn');
-
-
-    // -------------------------------------------------------------------
     // --- 5. SETUP SEMUA EVENT LISTENER ---------------------------------
-    // -------------------------------------------------------------------
 
     // Listener untuk aksi pada Tabel Reservasi (Update & Delete)
     if (tableBody) {
@@ -254,15 +401,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Listener untuk Pencarian
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            const filteredBookings = allBookings.filter(b => b.booker_name && b.booker_name.toLowerCase().includes(searchTerm));
-            renderTable(filteredBookings);
-        });
-    }
-    
     // Listener untuk Sidebar
     if (menuToggleBtn) menuToggleBtn.addEventListener('click', openSidebar);
     if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
@@ -282,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Listener untuk tombol-tombol pilih villa di dalam modal
     selectVillaButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const villaCard = this.closest('.villa-card');
             const villaName = villaCard.querySelector('h4').textContent.trim();
             let destinationFile = '';
@@ -290,15 +428,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (villaName === 'Villa Ebony') destinationFile = 'addadmin_ebony.html';
             else if (villaName === 'Villa Acacia') destinationFile = 'addadmin_accacia.html';
             else if (villaName === 'Villa Agathis') destinationFile = 'addadmin_agathis.html';
-            
+
             if (destinationFile) window.location.href = destinationFile;
         });
     });
 
-    
-    // -------------------------------------------------------------------
     // --- 6. INISIALISASI HALAMAN ---------------------------------------
-    // -------------------------------------------------------------------
 
     async function loadBookings() {
         if (tableBody) tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center;">Memuat data...</td></tr>`;
@@ -309,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showAlert('danger', `Gagal memuat data: ${error.message}`);
         }
     }
-    
+
     // Jalankan fungsi-fungsi yang perlu dieksekusi saat halaman pertama kali dimuat
     highlightActiveSidebarLink();
     loadBookings();

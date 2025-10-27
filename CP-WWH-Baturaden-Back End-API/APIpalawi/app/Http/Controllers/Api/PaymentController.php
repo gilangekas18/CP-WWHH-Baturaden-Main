@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
-use App\Models\Booking; // Import model Booking
+use App\Models\Booking;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; // Import DB untuk transaksi
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -21,27 +21,40 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+        Log::info('Data diterima di PaymentController:', $request->all());
+        Log::info('Ada file proof_file? ' . ($request->hasFile('proof_file') ? 'YA' : 'TIDAK'));
+
         $validator = Validator::make($request->all(), [
-            'booking_id' => 'required|exists:bookings,id|unique:payments,booking_id',
+            'booking_id' => 'required|exists:bookings,id',
             'method' => 'required|in:cash,qris',
             'proof_file' => 'required_if:method,qris|file|mimes:jpg,jpeg,png,pdf|max:2048'
+
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            Log::error('Validasi gagal:', $validator->errors()->toArray());
+            return response()->json([
+                'message' => 'Validasi gagal.',
+                'errors' => $validator->errors(),
+                'data_diterima' => $request->all()
+            ], 422);
         }
+
 
         $path = null;
         if ($request->hasFile('proof_file')) {
             $path = $request->file('proof_file')->store('proofs', 'public');
         }
 
-        $payment = Payment::create([
-            'booking_id' => $request->booking_id,
-            'method' => $request->method,
-            'proof_of_payment' => $path,
-            'status' => 'paid',
-        ]);
+        $payment = Payment::updateOrCreate(
+            ['booking_id' => $request->booking_id], // kunci unik
+            [
+                'method' => $request->method,
+                'proof_of_payment' => $path,
+                'status' => 'paid',
+            ]
+        );
+
 
         return response()->json($payment, 201);
     }
@@ -87,7 +100,6 @@ class PaymentController extends Controller
                 // Muat ulang relasi booking untuk menunjukkan data terbaru
                 'data' => $payment->load('booking')
             ]);
-
         } catch (Throwable $e) {
             Log::error('Gagal update status pembayaran: ' . $e->getMessage());
             return response()->json([

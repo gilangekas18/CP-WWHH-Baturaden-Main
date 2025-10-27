@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator; // Import Validator
+use Illuminate\Support\Facades\Validator; 
 
 class RoomTypeController extends Controller
 {
@@ -33,7 +33,7 @@ class RoomTypeController extends Controller
     public function update(Request $request, RoomType $roomType)
     {
         // 1. Validasi data yang masuk
-        // PERUBAHAN: Validasi sekarang hanya mengizinkan 'price_per_night'
+        //  Validasi sekarang hanya mengizinkan 'price_per_night'
         $validator = Validator::make($request->all(), [
             'price_per_night' => 'required|numeric|min:0',
         ]);

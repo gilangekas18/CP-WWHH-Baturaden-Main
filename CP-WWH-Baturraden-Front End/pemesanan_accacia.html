@@ -28,11 +28,6 @@
         .page-header {
             min-height: 400px; /* Kembali ke tinggi default template */
             margin-bottom: 2rem; /* Sesuaikan margin bawah */
-            /* Background tetap menggunakan CSS eksternal jika ada, atau tambahkan di sini jika khusus */
-            /* Jika Anda ingin menggunakan gambar pemandangan di sini juga, ubah ini: */
-            /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('img/image_f28b3e.jpg') no-repeat center center; */
-            /* background-size: cover; */
-            /* background-position: center; */
         }
         .page-header h1 {
             font-size: 3.5rem; /* Kembali ke ukuran font default template */
@@ -553,9 +548,9 @@
         const carouselDots = document.querySelectorAll('.carousel-dot');
         const roomImage = document.querySelector('.room-image-carousel img');
         const images = [
-            'img/accacia1.png', // Gambar utama Villa Accacia
-            'img/accacia2.png', // Tambahkan gambar lain jika ada
-            'img/accacia3.png'  // Tambahkan gambar lain jika ada
+            'img/accacia1.png', 
+            'img/accacia2.png', 
+            'img/accacia3.png' 
         ]; 
 
         carouselDots.forEach((dot, index) => {

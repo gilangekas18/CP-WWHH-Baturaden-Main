@@ -167,30 +167,6 @@ body {
     display: block; /* Dipastikan terlihat di semua ukuran layar */
 }
 
-/* Kelompokkan elemen kiri navbar untuk penataan yang lebih baik - INI DIHAPUS DARI HTML */
-/* .navbar-left-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-right: 20px;
-    flex-shrink: 0;
-} */
-
-/* Tulisan "Gilangeka Saputra" dan "User Admin" dihapus dari HTML, jadi styling ini tidak berlaku */
-/* .navbar .branding-header {
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #28a745;
-    white-space: nowrap;
-} */
-/* .navbar .page-title {
-    font-size: 2.5em;
-    font-weight: 700;
-    color: #333;
-    text-align: left;
-    margin-right: 20px;
-    white-space: nowrap;
-} */
 
 .navbar .villa-management {
     font-size: 1.4em; /* Sedikit diperbesar */

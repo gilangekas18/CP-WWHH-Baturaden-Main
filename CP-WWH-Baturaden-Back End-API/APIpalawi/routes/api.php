@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
 
 
-//===== ROUTE PUBLIC TIDAK PERKLU LOGIN======
+//===== ROUTE PUBLIC TIDAK PERLU LOGIN ======
 // --- Otentikasi ---
 Route::post('/register', [AuthController::class, 'register']);
 
@@ -35,27 +35,27 @@ Route::middleware('auth:sanctum')->group(function () {
     // --- Rute Booking (Sekarang Wajib Login) ---
     Route::post('/bookings', [BookingController::class, 'store']);
 
+    // === RUTE KHUSUS ADMIN ===
+    Route::prefix('admin')->group(function () {
 
+        // --- Booking Manager & Super Admin (akses booking) ---
+        Route::middleware('role:super-admin|booking-manager')->group(function () {
+            Route::get('/bookings', [BookingController::class, 'index']);
+            Route::get('/bookings/{booking}', [BookingController::class, 'show']);
+            Route::put('/bookings/{booking}', [BookingController::class, 'update']);
+        });
 
-    // === RUTE KHUSUS ADMIN (Dilindungi oleh peran/role) ===
-    Route::prefix('admin')->middleware('role:super-admin|booking-manager')->group(function () {
-        
-        Route::put('/room-types/{roomType}', [App\Http\Controllers\Api\RoomTypeController::class, 'update']);
-
-        // --- Rute untuk Booking (Dikelola Admin) ---
-        Route::get('/bookings', [BookingController::class, 'index']);
-        Route::get('/bookings/{booking}', [BookingController::class, 'show']);
-        Route::put('/bookings/{booking}', [BookingController::class, 'update']);
-
-        // --- Rute untuk Payment (Dikelola Admin) ---
-        Route::get('/payments', [PaymentController::class, 'index']);
-        Route::get('/payments/{payment}', [PaymentController::class, 'show']);
-        Route::put('/payments/{payment}', [PaymentController::class, 'update']);
-
-        // --- Rute KHUSUS SUPER ADMIN (di dalam grup admin) ---
+        // --- Super Admin saja (akses penuh) ---
         Route::middleware('role:super-admin')->group(function () {
+            Route::put('/room-types/{roomType}', [RoomTypeController::class, 'update']);
+            Route::get('/payments', [PaymentController::class, 'index']);
+            Route::get('/payments/{payment}', [PaymentController::class, 'show']);
+            Route::put('/payments/{payment}', [PaymentController::class, 'update']);
             Route::delete('/bookings/{booking}', [BookingController::class, 'destroy']);
             Route::delete('/payments/{payment}', [PaymentController::class, 'destroy']);
         });
     });
+
+    // --- Upload bukti pembayaran (user biasa) ---
+    Route::post('/payments', [PaymentController::class, 'store']);
 });

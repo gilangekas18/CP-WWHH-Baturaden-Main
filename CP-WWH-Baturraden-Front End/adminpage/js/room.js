@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         // Asumsi link sidebar di room.html (sekarang di layout/) mengarah ke file di layout/
         // Contoh href di sidebar: <a href="room.html">
-        // Dan currentPath akan terlihat seperti: /CP-WWH-BATURRADEN/adminpage/layout/room.html
 
         // Untuk link 'Room' di sidebar yang mengarah ke room.html
         if (currentPath.includes('layout/room.html') && link.href.endsWith('layout/room.html')) {
@@ -102,6 +101,4 @@ document.addEventListener('DOMContentLoaded', function() {
              }
         }
     });
-
-    // Tidak ada logika Chart.js yang spesifik untuk room.html yang diperlukan berdasarkan gambar.
 });

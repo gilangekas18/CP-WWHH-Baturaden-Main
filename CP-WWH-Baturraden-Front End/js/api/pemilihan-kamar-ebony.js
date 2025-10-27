@@ -1,15 +1,9 @@
-// =====================================================================
-// === PUSAT KONTROL HALAMAN DINAMIS ===================================
-// =====================================================================
+// Alamat IP backend
+const API_URL = "http://localhost:8000/api";
 
-// Alamat IP backend Anda. Pastikan ini adalah alamat yang benar!
-const API_URL = "http://192.168.248.194:8000/api";
-// ID untuk Villa Ebony adalah 1 (berdasarkan seeder kita)
 const VILLA_EBONY_ID = 1;
 
-/**
- * Fungsi ini akan berjalan otomatis saat seluruh struktur halaman HTML selesai dimuat.
- */
+
 document.addEventListener('DOMContentLoaded', () => {
     // Memanggil fungsi utama untuk memuat data kamar dari backend
     loadAndDisplayRoomOptions(VILLA_EBONY_ID);
@@ -47,7 +41,7 @@ async function loadAndDisplayRoomOptions(villaId) {
             const roomElement = document.createElement('div');
             roomElement.className = 'room-option-item';
             
-            // PENTING: Menyimpan ID unik dari database ke dalam elemen HTML
+            // Menyimpan ID unik dari database ke dalam elemen HTML
             roomElement.setAttribute('data-room-type-id', roomType.id);
 
             // Format harga menjadi Rupiah agar terlihat rapi
@@ -57,8 +51,7 @@ async function loadAndDisplayRoomOptions(villaId) {
                 minimumFractionDigits: 0
             }).format(roomType.price_per_night);
 
-            // Isi elemen dengan struktur HTML yang sama persis seperti milik Anda
-            // Ini memastikan tampilan tidak berubah
+            // Isi elemen dengan struktur HTML 
             roomElement.innerHTML = `
                 <div class="room-option-details">
                     <h6>${roomType.name}</h6>
@@ -81,7 +74,7 @@ async function loadAndDisplayRoomOptions(villaId) {
                 </div>
             `;
             
-            // 4. Masukkan elemen kamar yang sudah jadi ke dalam wadah di halaman
+            // 4. Masukkan elemen kamar ke dalam wadah di halaman
             roomListContainer.appendChild(roomElement);
         });
 

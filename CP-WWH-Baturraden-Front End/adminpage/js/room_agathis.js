@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. KONFIGURASI & VARIABEL GLOBAL ---
-    const API_URL = "http://192.168.248.194:8000/api"; 
+    const API_URL = "http://localhost:8000/api"; 
     const ROOM_TYPE_ID = 6; // ID untuk "All In Villa Agathis"
 
     // --- 2. SELEKSI SEMUA ELEMEN DOM ---
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!room) return;
 
         detailRoomName.textContent = room.name;
-        // Anda bisa menambahkan path gambar ke model/controller jika perlu
+        // fungsi menambahkan path gambar ke model/controller jika perlu
         // detailRoomImage.src = room.image_path; 
         updatePriceDisplay(room.price_per_night);
 

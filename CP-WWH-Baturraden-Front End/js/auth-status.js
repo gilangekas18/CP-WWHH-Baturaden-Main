@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const API_URL = "http://192.168.248.194:8000/api"; // Pastikan URL ini benar
+    const API_URL = "http://localhost:8000/api"; //  URL API
     const authButtonContainer = document.getElementById('auth-button-container');
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link'); // Diperbarui untuk mencakup dropdown
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link'); 
 
     /**
      * Fungsi untuk memeriksa apakah ada token login di localStorage.
@@ -32,10 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Hapus data dari localStorage terlepas dari sukses atau gagalnya API call
             localStorage.removeItem('authToken');
             localStorage.removeItem('userData');
-            
-            // === PERBAIKAN UTAMA: Arahkan kembali ke halaman saat ini ===
-            // Ini akan memaksa browser untuk memuat ulang halaman sepenuhnya 
-            // dan memperbarui tombol login/logout.
+
             window.location.href = window.location.pathname;
         }
     }
@@ -78,22 +75,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Fungsi untuk membuat dan menampilkan tombol yang sesuai (Login atau Logout).
+     * Fungsi untuk membuat button Login Logout.
      */
     function updateAuthButton() {
         if (!authButtonContainer) return;
 
+        const isAdminPage = window.location.pathname.includes('indexadmin.html') ||
+            window.location.pathname.includes('/admin/');
+
+        const iconHtml = isAdminPage ? '<i class="fas fa-right-from-bracket me-2"></i> ' : '';
+
         if (isLoggedIn()) {
-            authButtonContainer.innerHTML = `<a href="#" id="logoutButton" class="nav-item nav-link">Logout</a>`;
+            authButtonContainer.innerHTML = `
+            <a href="#" id="logoutButton" class="nav-item nav-link">
+                ${iconHtml}Logout
+            </a>
+        `;
             const logoutButton = document.getElementById('logoutButton');
             if (logoutButton) {
                 logoutButton.addEventListener('click', (event) => {
                     event.preventDefault();
-                    showLogoutConfirmation(); // Panggil popup konfirmasi
+                    showLogoutConfirmation();
                 });
             }
         } else {
-            authButtonContainer.innerHTML = `<a href="/includes/login.html" class="nav-item nav-link">Login</a>`;
+            // KODE LOGIN (Memasukkan ikon Login)
+
+            let loginIconHtml = '';
+            if (isAdminPage) {
+                // Bootstrap Icon untuk Login
+                loginIconHtml = '<i class="bi bi-box-arrow-in-left me-2"></i> ';
+            }
+            // ------------------------------------------
+
+            authButtonContainer.innerHTML = `<a href="/includes/login.html" class="nav-item nav-link">${loginIconHtml}Login</a>`;
         }
     }
 
@@ -140,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Jalankan semua fungsi inisialisasi
+    // fungsi inisialisasi
     injectModalCSS();
     updateAuthButton();
     highlightActiveNavLink();

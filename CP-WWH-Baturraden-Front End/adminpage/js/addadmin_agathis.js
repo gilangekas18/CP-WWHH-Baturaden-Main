@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. KONFIGURASI & VARIABEL GLOBAL ---
-    const API_URL = "http://192.168.248.194:8000/api"; // Sesuaikan jika IP Anda berubah
-    // ID Villa diubah menjadi 2 untuk Agathis
+    const API_URL = "http://localhost:8000/api"; 
+
     const VILLA_ID = 2; 
     
     // --- 2. SELEKSI SEMUA ELEMEN DOM ---
